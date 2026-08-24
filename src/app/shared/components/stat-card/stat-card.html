@@ -1,0 +1,29 @@
+<article class="stat-card">
+  <div class="stat-card__top">
+    <p class="stat-card__label">
+      {{ getLabel() }}
+    </p>
+
+    <span class="stat-card__change" [class.stat-card__change--down]="stat.trend === 'down'">
+      {{ stat.changeValue }}
+
+      @if (stat.changeKey) {
+        {{ t().dashboard.thisMonth }}
+      }
+    </span>
+  </div>
+
+  <p class="stat-card__value">
+    {{ stat.value }}
+  </p>
+
+  <div class="stat-card__footer">
+    <span>
+      {{ t().dashboard.previousPeriod }}
+    </span>
+
+    <span class="stat-card__trend" aria-hidden="true">
+      {{ stat.trend === 'up' ? '↗' : '↘' }}
+    </span>
+  </div>
+</article>

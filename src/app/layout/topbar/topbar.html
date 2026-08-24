@@ -1,0 +1,58 @@
+<header class="topbar">
+  <div class="topbar__heading">
+    <p class="topbar__eyebrow">{{ t().common.workspace }}</p>
+    <h1 class="topbar__title">{{ pageTitle() }}</h1>
+  </div>
+
+  <div class="topbar__actions">
+    <label class="topbar__search">
+      <span class="topbar__search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+      </span>
+
+      <input
+        type="search"
+        [placeholder]="t().common.search"
+        [attr.aria-label]="t().common.search"
+      />
+      <kbd>⌘ K</kbd>
+    </label>
+
+    <div class="topbar__language" aria-label="Language selector">
+      <button
+        type="button"
+        [class.is-active]="translation.language() === 'en'"
+        [attr.aria-pressed]="translation.language() === 'en'"
+        (click)="setLanguage('en')"
+      >
+        EN
+      </button>
+
+      <button
+        type="button"
+        [class.is-active]="translation.language() === 'it'"
+        [attr.aria-pressed]="translation.language() === 'it'"
+        (click)="setLanguage('it')"
+      >
+        IT
+      </button>
+    </div>
+
+    <button class="topbar__icon-button" type="button" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+        <path d="M10 21h4"></path>
+      </svg>
+
+      <span class="topbar__notification-dot" aria-hidden="true"></span>
+    </button>
+
+    <a class="topbar__primary-action" routerLink="/projects">
+      <span aria-hidden="true">+</span>
+      {{ t().common.newProject }}
+    </a>
+  </div>
+</header>

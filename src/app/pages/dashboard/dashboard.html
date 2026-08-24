@@ -1,0 +1,170 @@
+<section class="dashboard">
+  <div class="dashboard__welcome">
+    <div>
+      <p class="dashboard__eyebrow">
+        {{ t().dashboard.overview }}
+      </p>
+
+      <h2>
+        {{ t().dashboard.greeting }}
+      </h2>
+    </div>
+
+    <p class="dashboard__date">
+      {{ formatLongDate(today) }}
+    </p>
+  </div>
+
+  <div class="dashboard__stats">
+    @for (stat of stats; track stat.key) {
+      <app-stat-card [stat]="stat" />
+    }
+  </div>
+
+  <div class="dashboard__main-grid">
+    <section class="panel revenue">
+      <header class="panel__header">
+        <div>
+          <p class="panel__eyebrow">
+            {{ t().dashboard.performance }}
+          </p>
+
+          <h3>
+            {{ t().dashboard.revenue }}
+          </h3>
+        </div>
+
+        <button type="button">
+          {{ t().dashboard.lastSixMonths }}
+          <span aria-hidden="true">⌄</span>
+        </button>
+      </header>
+
+      <div class="revenue__summary">
+        <strong>€48,580</strong>
+        <span>+18.4%</span>
+      </div>
+
+      <div class="revenue__chart">
+        @for (item of revenue; track item.month) {
+          <div class="revenue__column">
+            <div class="revenue__bar-wrap">
+              <div
+                class="revenue__bar"
+                [style.height.%]="(item.value / maxRevenue) * 100"
+                [attr.title]="formatMonth(item.month) + ': €' + item.value"
+              ></div>
+            </div>
+
+            <span>
+              {{ formatMonth(item.month) }}
+            </span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="panel deadlines">
+      <header class="panel__header">
+        <div>
+          <p class="panel__eyebrow">
+            {{ t().dashboard.schedule }}
+          </p>
+
+          <h3>
+            {{ t().dashboard.upcoming }}
+          </h3>
+        </div>
+
+        <button type="button">
+          {{ t().common.viewAll }}
+        </button>
+      </header>
+
+      <div class="deadlines__list">
+        @for (deadline of deadlines; track deadline.titleKey) {
+          <article class="deadlines__item">
+            <div class="deadlines__date">
+              {{ formatShortDate(deadline.date) }}
+            </div>
+
+            <div class="deadlines__copy">
+              <strong>
+                {{ getDeadlineTitle(deadline.titleKey) }}
+              </strong>
+
+              <span>
+                {{ deadline.project }}
+              </span>
+            </div>
+
+            <span class="deadlines__type">
+              {{ getDeadlineTypeLabel(deadline.type) }}
+            </span>
+          </article>
+        }
+      </div>
+    </section>
+  </div>
+
+  <section class="panel projects-table">
+    <header class="panel__header">
+      <div>
+        <p class="panel__eyebrow">
+          {{ t().dashboard.projects }}
+        </p>
+
+        <h3>
+          {{ t().dashboard.recentProjects }}
+        </h3>
+      </div>
+
+      <a href="/projects"> {{ t().dashboard.viewAllProjects }} → </a>
+    </header>
+
+    <div class="projects-table__table">
+      <div class="projects-table__row projects-table__row--header">
+        <span>{{ t().dashboard.project }}</span>
+        <span>{{ t().dashboard.status }}</span>
+        <span>{{ t().dashboard.progress }}</span>
+        <span>{{ t().dashboard.dueDate }}</span>
+      </div>
+
+      @for (project of projects; track project.name) {
+        <div class="projects-table__row">
+          <div>
+            <strong>
+              {{ project.name }}
+            </strong>
+
+            <span>
+              {{ project.client }}
+            </span>
+          </div>
+
+          <div>
+            <span
+              class="projects-table__status"
+              [class.projects-table__status--review]="project.status === 'review'"
+              [class.projects-table__status--complete]="project.status === 'completed'"
+            >
+              {{ getProjectStatusLabel(project.status) }}
+            </span>
+          </div>
+
+          <div class="projects-table__progress">
+            <div>
+              <span [style.width.%]="project.progress"></span>
+            </div>
+
+            <small> {{ project.progress }}% </small>
+          </div>
+
+          <span>
+            {{ formatShortDate(project.dueDate) }}
+          </span>
+        </div>
+      }
+    </div>
+  </section>
+</section>
