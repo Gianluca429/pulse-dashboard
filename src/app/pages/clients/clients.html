@@ -1,1 +1,175 @@
-<p>clients works!</p>
+<section class="clients">
+  <div class="clients__hero">
+    <div>
+      <p class="clients__eyebrow">
+        {{ t().clients.eyebrow }}
+      </p>
+
+      <h2>
+        {{ t().clients.title }}
+      </h2>
+
+      <p class="clients__intro">
+        {{ t().clients.intro }}
+      </p>
+    </div>
+
+    <button class="clients__new" type="button" (click)="openCreateModal()">
+      <span aria-hidden="true">+</span>
+      {{ t().clients.newClient }}
+    </button>
+  </div>
+
+  <div class="clients__stats">
+    <article class="client-stat">
+      <span>
+        {{ t().clients.totalClients }}
+      </span>
+
+      <strong>
+        {{ clients().length }}
+      </strong>
+    </article>
+
+    <article class="client-stat">
+      <span>
+        {{ t().clients.activeClients }}
+      </span>
+
+      <strong>
+        {{ activeClientCount() }}
+      </strong>
+    </article>
+
+    <article class="client-stat">
+      <span>
+        {{ t().clients.totalValue }}
+      </span>
+
+      <strong>
+        {{ formatCurrency(totalValue()) }}
+      </strong>
+    </article>
+  </div>
+
+  <div class="clients__toolbar">
+    <label class="clients__search">
+      <span class="clients__search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"></circle>
+
+          <path d="m20 20-4-4"></path>
+        </svg>
+      </span>
+
+      <input
+        type="search"
+        [value]="searchTerm()"
+        [placeholder]="t().clients.searchPlaceholder"
+        [attr.aria-label]="t().clients.searchPlaceholder"
+        (input)="setSearch($event)"
+      />
+    </label>
+
+    <div class="clients__filters">
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          [class.is-active]="activeFilter() === filter"
+          (click)="setFilter(filter)"
+        >
+          {{ getFilterLabel(filter) }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="clients__summary">
+    <strong>
+      {{ clientCount() }}
+    </strong>
+
+    {{ t().clients.results }}
+  </div>
+
+  @if (filteredClients().length > 0) {
+    <div class="client-table">
+      <div class="client-table__row client-table__row--header">
+        <span>{{ t().clients.client }}</span>
+        <span>{{ t().clients.status }}</span>
+        <span>{{ t().clients.projects }}</span>
+        <span>{{ t().clients.value }}</span>
+        <span>{{ t().clients.lastContact }}</span>
+        <span></span>
+      </div>
+
+      @for (client of filteredClients(); track client.id) {
+        <article class="client-table__row">
+          <div class="client-table__identity">
+            <span class="client-table__avatar">
+              {{ getInitials(client) }}
+            </span>
+
+            <div>
+              <strong>
+                {{ client.name }}
+              </strong>
+
+              <span>
+                {{ client.company }}
+              </span>
+
+              <a [href]="'mailto:' + client.email">
+                {{ client.email }}
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <span
+              class="client-table__status"
+              [class.client-table__status--inactive]="client.status === 'inactive'"
+            >
+              <i aria-hidden="true"></i>
+              {{ getStatusLabel(client.status) }}
+            </span>
+          </div>
+
+          <strong class="client-table__number">
+            {{ client.projectsCount }}
+          </strong>
+
+          <strong class="client-table__value">
+            {{ formatCurrency(client.totalValue) }}
+          </strong>
+
+          <span class="client-table__date">
+            {{ formatDate(client.lastContact) }}
+          </span>
+
+          <button
+            class="client-table__more"
+            type="button"
+            [attr.aria-label]="t().clients.moreOptions"
+          >
+            •••
+          </button>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="clients__empty">
+      <h3>
+        {{ t().clients.noClients }}
+      </h3>
+
+      <p>
+        {{ t().clients.noClientsDescription }}
+      </p>
+    </div>
+  }
+</section>
+
+@if (isCreateModalOpen()) {
+  <app-client-form-modal (closed)="closeCreateModal()" (clientCreated)="createClient($event)" />
+}

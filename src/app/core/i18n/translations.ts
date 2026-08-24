@@ -136,6 +136,62 @@ interface TranslationDictionary {
       open: string;
     };
   };
+
+  clients: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+
+    newClient: string;
+
+    totalClients: string;
+    activeClients: string;
+    totalValue: string;
+
+    searchPlaceholder: string;
+
+    all: string;
+    active: string;
+    inactive: string;
+
+    results: string;
+
+    client: string;
+    status: string;
+    projects: string;
+    value: string;
+    lastContact: string;
+
+    moreOptions: string;
+
+    noClients: string;
+    noClientsDescription: string;
+
+    form: {
+      eyebrow: string;
+      title: string;
+      intro: string;
+
+      name: string;
+      namePlaceholder: string;
+
+      company: string;
+      companyPlaceholder: string;
+
+      email: string;
+      emailPlaceholder: string;
+
+      status: string;
+      lastContact: string;
+
+      requiredField: string;
+      emailError: string;
+
+      cancel: string;
+      create: string;
+      close: string;
+    };
+  };
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
@@ -276,6 +332,62 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Delete project',
       },
     },
+
+    clients: {
+      eyebrow: 'Workspace',
+      title: 'Clients',
+      intro: 'Keep track of client relationships, projects and overall business value.',
+
+      newClient: 'New client',
+
+      totalClients: 'Total clients',
+      activeClients: 'Active clients',
+      totalValue: 'Client value',
+
+      searchPlaceholder: 'Search clients, companies or email...',
+
+      all: 'All',
+      active: 'Active',
+      inactive: 'Inactive',
+
+      results: 'clients',
+
+      client: 'Client',
+      status: 'Status',
+      projects: 'Projects',
+      value: 'Value',
+      lastContact: 'Last contact',
+
+      moreOptions: 'More client options',
+
+      noClients: 'No clients found',
+      noClientsDescription: 'Try changing your search or selecting another status.',
+
+      form: {
+        eyebrow: 'New client',
+        title: 'Add a client',
+        intro: 'Add the essential contact information and relationship status.',
+
+        name: 'Client name',
+        namePlaceholder: 'e.g. Laura Bianchi',
+
+        company: 'Company',
+        companyPlaceholder: 'e.g. Atlas Studio',
+
+        email: 'Email',
+        emailPlaceholder: 'e.g. laura@atlasstudio.it',
+
+        status: 'Status',
+        lastContact: 'Last contact',
+
+        requiredField: 'This field is required.',
+        emailError: 'Enter a valid email address.',
+
+        cancel: 'Cancel',
+        create: 'Create client',
+        close: 'Close form',
+      },
+    },
   },
 
   it: {
@@ -413,6 +525,62 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         cancel: 'Annulla',
         confirm: 'Elimina progetto',
         open: 'Elimina progetto',
+      },
+    },
+
+    clients: {
+      eyebrow: 'Area di lavoro',
+      title: 'Clienti',
+      intro: 'Gestisci relazioni, progetti e valore complessivo dei tuoi clienti.',
+
+      newClient: 'Nuovo cliente',
+
+      totalClients: 'Clienti totali',
+      activeClients: 'Clienti attivi',
+      totalValue: 'Valore clienti',
+
+      searchPlaceholder: 'Cerca clienti, aziende o email...',
+
+      all: 'Tutti',
+      active: 'Attivi',
+      inactive: 'Inattivi',
+
+      results: 'clienti',
+
+      client: 'Cliente',
+      status: 'Stato',
+      projects: 'Progetti',
+      value: 'Valore',
+      lastContact: 'Ultimo contatto',
+
+      moreOptions: 'Altre opzioni cliente',
+
+      noClients: 'Nessun cliente trovato',
+      noClientsDescription: 'Prova a modificare la ricerca o a selezionare un altro stato.',
+
+      form: {
+        eyebrow: 'Nuovo cliente',
+        title: 'Aggiungi un cliente',
+        intro: 'Inserisci le informazioni essenziali di contatto e lo stato della relazione.',
+
+        name: 'Nome cliente',
+        namePlaceholder: 'es. Laura Bianchi',
+
+        company: 'Azienda',
+        companyPlaceholder: 'es. Atlas Studio',
+
+        email: 'Email',
+        emailPlaceholder: 'es. laura@atlasstudio.it',
+
+        status: 'Stato',
+        lastContact: 'Ultimo contatto',
+
+        requiredField: 'Questo campo è obbligatorio.',
+        emailError: 'Inserisci un indirizzo email valido.',
+
+        cancel: 'Annulla',
+        create: 'Crea cliente',
+        close: 'Chiudi il modulo',
       },
     },
   },

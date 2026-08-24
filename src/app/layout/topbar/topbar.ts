@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -8,7 +8,7 @@ import { Language } from '../../core/i18n/translations';
 
 @Component({
   selector: 'app-topbar',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './topbar.html',
   styleUrl: './topbar.scss',
 })
@@ -24,7 +24,9 @@ export class Topbar {
       map((event) => event.urlAfterRedirects),
       startWith(this.router.url),
     ),
-    { initialValue: this.router.url },
+    {
+      initialValue: this.router.url,
+    },
   );
 
   readonly pageTitle = computed(() => {
