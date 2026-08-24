@@ -1,4 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
 
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -12,7 +24,7 @@ import { CreateProjectInput, Project, ProjectStatus } from '../../../models/proj
   templateUrl: './project-form-modal.html',
   styleUrl: './project-form-modal.scss',
 })
-export class ProjectFormModal implements OnInit {
+export class ProjectFormModal implements OnInit, AfterViewInit, OnDestroy {
   private readonly translation = inject(TranslationService);
 
   readonly t = this.translation.t;
@@ -20,10 +32,13 @@ export class ProjectFormModal implements OnInit {
   @Input() project: Project | null = null;
 
   @Output() closed = new EventEmitter<void>();
-
   @Output() projectCreated = new EventEmitter<CreateProjectInput>();
-
   @Output() projectUpdated = new EventEmitter<CreateProjectInput>();
+
+  @ViewChild('projectNameInput')
+  private projectNameInput?: ElementRef<HTMLInputElement>;
+
+  private previousBodyOverflow = '';
 
   readonly form = new FormGroup({
     name: new FormControl('', {
@@ -57,6 +72,8 @@ export class ProjectFormModal implements OnInit {
   });
 
   ngOnInit(): void {
+    this.lockBodyScroll();
+
     if (!this.project) {
       return;
     }
@@ -69,6 +86,21 @@ export class ProjectFormModal implements OnInit {
       dueDate: this.project.dueDate,
       budget: this.project.budget,
     });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.projectNameInput?.nativeElement.focus();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.restoreBodyScroll();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.close();
   }
 
   get isEditMode(): boolean {
@@ -112,5 +144,14 @@ export class ProjectFormModal implements OnInit {
     if (event.target === event.currentTarget) {
       this.close();
     }
+  }
+
+  private lockBodyScroll(): void {
+    this.previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+
+  private restoreBodyScroll(): void {
+    document.body.style.overflow = this.previousBodyOverflow;
   }
 }

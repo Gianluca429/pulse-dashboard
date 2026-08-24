@@ -32,7 +32,7 @@
     </div>
 
     <footer class="delete-modal__footer">
-      <button class="delete-modal__cancel" type="button" (click)="close()">
+      <button #cancelButton class="delete-modal__cancel" type="button" (click)="close()">
         {{ t().projects.delete.cancel }}
       </button>
 
