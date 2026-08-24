@@ -33,6 +33,30 @@ export class ProjectService {
     return newProject;
   }
 
+  updateProject(id: number, input: CreateProjectInput): void {
+    this.projects.update((projects) =>
+      projects.map((project) => {
+        if (project.id !== id) {
+          return project;
+        }
+
+        return {
+          ...project,
+          name: input.name,
+          client: input.client,
+          description: input.description,
+          descriptionKey: undefined,
+          status: input.status,
+          progress: this.getUpdatedProgress(project.progress, input.status),
+          dueDate: input.dueDate,
+          budget: input.budget,
+        };
+      }),
+    );
+
+    this.saveProjects();
+  }
+
   private loadProjects(): Project[] {
     if (typeof localStorage === 'undefined') {
       return PROJECTS;
@@ -75,5 +99,28 @@ export class ProjectService {
       default:
         return 0;
     }
+  }
+
+  private getUpdatedProgress(
+    currentProgress: number,
+    status: CreateProjectInput['status'],
+  ): number {
+    if (status === 'completed') {
+      return 100;
+    }
+
+    if (status === 'planning') {
+      return Math.min(currentProgress, 20);
+    }
+
+    if (status === 'review') {
+      return Math.max(currentProgress, 80);
+    }
+
+    if (status === 'in-progress' && currentProgress === 0) {
+      return 35;
+    }
+
+    return currentProgress;
   }
 }

@@ -3,20 +3,20 @@
     class="project-modal__dialog"
     role="dialog"
     aria-modal="true"
-    [attr.aria-labelledby]="'new-project-title'"
+    aria-labelledby="project-form-title"
   >
     <header class="project-modal__header">
       <div>
         <p class="project-modal__eyebrow">
-          {{ t().projects.form.eyebrow }}
+          {{ isEditMode ? t().projects.form.editEyebrow : t().projects.form.eyebrow }}
         </p>
 
-        <h2 id="new-project-title">
-          {{ t().projects.form.title }}
+        <h2 id="project-form-title">
+          {{ isEditMode ? t().projects.form.editTitle : t().projects.form.title }}
         </h2>
 
         <p>
-          {{ t().projects.form.intro }}
+          {{ isEditMode ? t().projects.form.editIntro : t().projects.form.intro }}
         </p>
       </div>
 
@@ -153,8 +153,11 @@
         </button>
 
         <button class="project-modal__submit" type="submit">
-          <span aria-hidden="true">+</span>
-          {{ t().projects.form.create }}
+          @if (!isEditMode) {
+            <span aria-hidden="true">+</span>
+          }
+
+          {{ isEditMode ? t().projects.form.save : t().projects.form.create }}
         </button>
       </footer>
     </form>

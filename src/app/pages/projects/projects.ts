@@ -33,7 +33,9 @@ export class Projects {
 
   readonly activeFilter = signal<ProjectFilter>('all');
 
-  readonly isCreateModalOpen = signal(false);
+  readonly isProjectModalOpen = signal(false);
+
+  readonly selectedProject = signal<Project | null>(null);
 
   readonly filters: ProjectFilter[] = ['all', 'planning', 'in-progress', 'review', 'completed'];
 
@@ -57,11 +59,18 @@ export class Projects {
   readonly projectCount = computed(() => this.filteredProjects().length);
 
   openCreateModal(): void {
-    this.isCreateModalOpen.set(true);
+    this.selectedProject.set(null);
+    this.isProjectModalOpen.set(true);
   }
 
-  closeCreateModal(): void {
-    this.isCreateModalOpen.set(false);
+  openEditModal(project: Project): void {
+    this.selectedProject.set(project);
+    this.isProjectModalOpen.set(true);
+  }
+
+  closeProjectModal(): void {
+    this.isProjectModalOpen.set(false);
+    this.selectedProject.set(null);
   }
 
   createProject(input: CreateProjectInput): void {
@@ -70,7 +79,19 @@ export class Projects {
     this.activeFilter.set('all');
     this.searchTerm.set('');
 
-    this.closeCreateModal();
+    this.closeProjectModal();
+  }
+
+  updateProject(input: CreateProjectInput): void {
+    const project = this.selectedProject();
+
+    if (!project) {
+      return;
+    }
+
+    this.projectService.updateProject(project.id, input);
+
+    this.closeProjectModal();
   }
 
   setSearch(event: Event): void {

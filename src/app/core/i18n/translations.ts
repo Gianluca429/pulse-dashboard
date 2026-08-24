@@ -79,6 +79,7 @@ interface TranslationDictionary {
     budget: string;
 
     openProject: string;
+    editProject: string;
     moreOptions: string;
 
     noProjects: string;
@@ -97,6 +98,10 @@ interface TranslationDictionary {
       eyebrow: string;
       title: string;
       intro: string;
+
+      editEyebrow: string;
+      editTitle: string;
+      editIntro: string;
 
       projectName: string;
       projectNamePlaceholder: string;
@@ -117,6 +122,7 @@ interface TranslationDictionary {
 
       cancel: string;
       create: string;
+      save: string;
       close: string;
     };
   };
@@ -202,6 +208,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       budget: 'Budget',
 
       openProject: 'Open project',
+      editProject: 'Edit project',
       moreOptions: 'More project options',
 
       noProjects: 'No projects found',
@@ -222,6 +229,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         intro:
           'Add the essential project details. You can update progress and other information later.',
 
+        editEyebrow: 'Edit project',
+        editTitle: 'Update project',
+        editIntro: 'Review and update the project information.',
+
         projectName: 'Project name',
         projectNamePlaceholder: 'e.g. Atlas Website',
 
@@ -241,6 +252,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
 
         cancel: 'Cancel',
         create: 'Create project',
+        save: 'Save changes',
         close: 'Close form',
       },
     },
@@ -325,6 +337,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       budget: 'Budget',
 
       openProject: 'Apri progetto',
+      editProject: 'Modifica progetto',
       moreOptions: 'Altre opzioni progetto',
 
       noProjects: 'Nessun progetto trovato',
@@ -345,6 +358,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         intro:
           'Inserisci le informazioni essenziali del progetto. Potrai aggiornare avanzamento e altri dettagli in seguito.',
 
+        editEyebrow: 'Modifica progetto',
+        editTitle: 'Aggiorna progetto',
+        editIntro: 'Rivedi e aggiorna le informazioni del progetto.',
+
         projectName: 'Nome progetto',
         projectNamePlaceholder: 'es. Sito Atlas',
 
@@ -364,6 +381,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
 
         cancel: 'Annulla',
         create: 'Crea progetto',
+        save: 'Salva modifiche',
         close: 'Chiudi il modulo',
       },
     },
