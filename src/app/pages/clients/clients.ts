@@ -6,12 +6,13 @@ import { ClientService } from '../../core/services/client.service';
 import { Client, ClientStatus, CreateClientInput } from '../../models/client.model';
 
 import { ClientFormModal } from '../../shared/components/client-form-modal/client-form-modal';
+import { ClientDeleteModal } from '../../shared/components/client-delete-modal/client-delete-modal';
 
 type ClientFilter = 'all' | ClientStatus;
 
 @Component({
   selector: 'app-clients',
-  imports: [ClientFormModal],
+  imports: [ClientFormModal, ClientDeleteModal],
   templateUrl: './clients.html',
   styleUrl: './clients.scss',
 })
@@ -28,7 +29,11 @@ export class Clients {
 
   readonly activeFilter = signal<ClientFilter>('all');
 
-  readonly isCreateModalOpen = signal(false);
+  readonly isClientModalOpen = signal(false);
+
+  readonly selectedClient = signal<Client | null>(null);
+
+  readonly clientToDelete = signal<Client | null>(null);
 
   readonly filters: ClientFilter[] = ['all', 'active', 'inactive'];
 
@@ -61,20 +66,53 @@ export class Clients {
   );
 
   openCreateModal(): void {
-    this.isCreateModalOpen.set(true);
+    this.selectedClient.set(null);
+    this.isClientModalOpen.set(true);
   }
 
-  closeCreateModal(): void {
-    this.isCreateModalOpen.set(false);
+  openEditModal(client: Client): void {
+    this.selectedClient.set(client);
+    this.isClientModalOpen.set(true);
   }
 
-  createClient(input: CreateClientInput): void {
-    this.clientService.createClient(input);
+  closeClientModal(): void {
+    this.isClientModalOpen.set(false);
+    this.selectedClient.set(null);
+  }
 
-    this.activeFilter.set('all');
-    this.searchTerm.set('');
+  saveClient(input: CreateClientInput): void {
+    const selectedClient = this.selectedClient();
 
-    this.closeCreateModal();
+    if (selectedClient) {
+      this.clientService.updateClient(selectedClient.id, input);
+    } else {
+      this.clientService.createClient(input);
+
+      this.searchTerm.set('');
+      this.activeFilter.set('all');
+    }
+
+    this.closeClientModal();
+  }
+
+  openDeleteModal(client: Client): void {
+    this.clientToDelete.set(client);
+  }
+
+  closeDeleteModal(): void {
+    this.clientToDelete.set(null);
+  }
+
+  confirmDeleteClient(): void {
+    const client = this.clientToDelete();
+
+    if (!client) {
+      return;
+    }
+
+    this.clientService.deleteClient(client.id);
+
+    this.closeDeleteModal();
   }
 
   setSearch(event: Event): void {

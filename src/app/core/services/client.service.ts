@@ -33,6 +33,31 @@ export class ClientService {
     return newClient;
   }
 
+  updateClient(id: number, input: CreateClientInput): void {
+    this.clients.update((clients) =>
+      clients.map((client) =>
+        client.id === id
+          ? {
+              ...client,
+              name: input.name,
+              company: input.company,
+              email: input.email,
+              status: input.status,
+              lastContact: input.lastContact,
+            }
+          : client,
+      ),
+    );
+
+    this.saveClients();
+  }
+
+  deleteClient(id: number): void {
+    this.clients.update((clients) => clients.filter((client) => client.id !== id));
+
+    this.saveClients();
+  }
+
   private loadClients(): Client[] {
     if (typeof localStorage === 'undefined') {
       return CLIENTS;

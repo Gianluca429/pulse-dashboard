@@ -172,6 +172,10 @@ interface TranslationDictionary {
       title: string;
       intro: string;
 
+      editEyebrow: string;
+      editTitle: string;
+      editIntro: string;
+
       name: string;
       namePlaceholder: string;
 
@@ -189,7 +193,19 @@ interface TranslationDictionary {
 
       cancel: string;
       create: string;
+      save: string;
       close: string;
+    };
+    editClient: string;
+
+    delete: {
+      eyebrow: string;
+      title: string;
+      message: string;
+      warning: string;
+      cancel: string;
+      confirm: string;
+      open: string;
     };
   };
 }
@@ -368,6 +384,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         title: 'Add a client',
         intro: 'Add the essential contact information and relationship status.',
 
+        editEyebrow: 'Edit client',
+        editTitle: 'Update client',
+        editIntro: 'Review and update the client information.',
+
         name: 'Client name',
         namePlaceholder: 'e.g. Laura Bianchi',
 
@@ -385,7 +405,19 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
 
         cancel: 'Cancel',
         create: 'Create client',
+        save: 'Save changes',
         close: 'Close form',
+      },
+      editClient: 'Edit client',
+
+      delete: {
+        eyebrow: 'Delete client',
+        title: 'Are you sure?',
+        message: 'You are about to delete',
+        warning: 'This action cannot be undone.',
+        cancel: 'Cancel',
+        confirm: 'Delete client',
+        open: 'Delete client',
       },
     },
   },
@@ -563,6 +595,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         title: 'Aggiungi un cliente',
         intro: 'Inserisci le informazioni essenziali di contatto e lo stato della relazione.',
 
+        editEyebrow: 'Modifica cliente',
+        editTitle: 'Aggiorna cliente',
+        editIntro: 'Rivedi e aggiorna le informazioni del cliente.',
+
         name: 'Nome cliente',
         namePlaceholder: 'es. Laura Bianchi',
 
@@ -580,7 +616,19 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
 
         cancel: 'Annulla',
         create: 'Crea cliente',
+        save: 'Salva modifiche',
         close: 'Chiudi il modulo',
+      },
+      editClient: 'Modifica cliente',
+
+      delete: {
+        eyebrow: 'Elimina cliente',
+        title: 'Sei sicuro?',
+        message: 'Stai per eliminare',
+        warning: 'Questa azione non può essere annullata.',
+        cancel: 'Annulla',
+        confirm: 'Elimina cliente',
+        open: 'Elimina cliente',
       },
     },
   },

@@ -4,6 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -15,7 +16,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { TranslationService } from '../../../core/i18n/translation.service';
 
-import { ClientStatus, CreateClientInput } from '../../../models/client.model';
+import { Client, ClientStatus, CreateClientInput } from '../../../models/client.model';
 
 @Component({
   selector: 'app-client-form-modal',
@@ -28,8 +29,11 @@ export class ClientFormModal implements OnInit, AfterViewInit, OnDestroy {
 
   readonly t = this.translation.t;
 
+  @Input() client: Client | null = null;
+
   @Output() closed = new EventEmitter<void>();
-  @Output() clientCreated = new EventEmitter<CreateClientInput>();
+
+  @Output() clientSaved = new EventEmitter<CreateClientInput>();
 
   @ViewChild('clientNameInput')
   private clientNameInput?: ElementRef<HTMLInputElement>;
@@ -63,8 +67,22 @@ export class ClientFormModal implements OnInit, AfterViewInit, OnDestroy {
     }),
   });
 
+  get isEditMode(): boolean {
+    return this.client !== null;
+  }
+
   ngOnInit(): void {
     this.lockBodyScroll();
+
+    if (this.client) {
+      this.form.setValue({
+        name: this.client.name,
+        company: this.client.company,
+        email: this.client.email,
+        status: this.client.status,
+        lastContact: this.client.lastContact,
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -94,7 +112,7 @@ export class ClientFormModal implements OnInit, AfterViewInit, OnDestroy {
 
     const value = this.form.getRawValue();
 
-    this.clientCreated.emit({
+    this.clientSaved.emit({
       name: value.name.trim(),
       company: value.company.trim(),
       email: value.email.trim(),
@@ -111,6 +129,7 @@ export class ClientFormModal implements OnInit, AfterViewInit, OnDestroy {
 
   private lockBodyScroll(): void {
     this.previousBodyOverflow = document.body.style.overflow;
+
     document.body.style.overflow = 'hidden';
   }
 

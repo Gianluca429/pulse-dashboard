@@ -95,11 +95,26 @@
   @if (filteredClients().length > 0) {
     <div class="client-table">
       <div class="client-table__row client-table__row--header">
-        <span>{{ t().clients.client }}</span>
-        <span>{{ t().clients.status }}</span>
-        <span>{{ t().clients.projects }}</span>
-        <span>{{ t().clients.value }}</span>
-        <span>{{ t().clients.lastContact }}</span>
+        <span>
+          {{ t().clients.client }}
+        </span>
+
+        <span>
+          {{ t().clients.status }}
+        </span>
+
+        <span>
+          {{ t().clients.projects }}
+        </span>
+
+        <span>
+          {{ t().clients.value }}
+        </span>
+
+        <span>
+          {{ t().clients.lastContact }}
+        </span>
+
         <span></span>
       </div>
 
@@ -131,6 +146,7 @@
               [class.client-table__status--inactive]="client.status === 'inactive'"
             >
               <i aria-hidden="true"></i>
+
               {{ getStatusLabel(client.status) }}
             </span>
           </div>
@@ -147,13 +163,31 @@
             {{ formatDate(client.lastContact) }}
           </span>
 
-          <button
-            class="client-table__more"
-            type="button"
-            [attr.aria-label]="t().clients.moreOptions"
-          >
-            •••
-          </button>
+          <div class="client-table__actions">
+            <button
+              class="client-table__more"
+              type="button"
+              [attr.aria-label]="t().clients.editClient"
+              (click)="openEditModal(client)"
+            >
+              •••
+            </button>
+
+            <button
+              class="client-table__delete"
+              type="button"
+              [attr.aria-label]="t().clients.delete.open"
+              (click)="openDeleteModal(client)"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+                <path d="M6 7l1 13h10l1-13"></path>
+                <path d="M9 7V4h6v3"></path>
+              </svg>
+            </button>
+          </div>
         </article>
       }
     </div>
@@ -170,6 +204,18 @@
   }
 </section>
 
-@if (isCreateModalOpen()) {
-  <app-client-form-modal (closed)="closeCreateModal()" (clientCreated)="createClient($event)" />
+@if (isClientModalOpen()) {
+  <app-client-form-modal
+    [client]="selectedClient()"
+    (closed)="closeClientModal()"
+    (clientSaved)="saveClient($event)"
+  />
+}
+
+@if (clientToDelete(); as client) {
+  <app-client-delete-modal
+    [client]="client"
+    (closed)="closeDeleteModal()"
+    (confirmed)="confirmDeleteClient()"
+  />
 }
