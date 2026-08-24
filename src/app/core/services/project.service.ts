@@ -123,4 +123,10 @@ export class ProjectService {
 
     return currentProgress;
   }
+
+  deleteProject(id: number): void {
+    this.projects.update((projects) => projects.filter((project) => project.id !== id));
+
+    this.saveProjects();
+  }
 }

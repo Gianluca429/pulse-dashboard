@@ -136,7 +136,8 @@
             <button
               class="project-card__more"
               type="button"
-              [attr.aria-label]="t().projects.moreOptions"
+              [attr.aria-label]="t().projects.delete.open"
+              (click)="openDeleteModal(project)"
             >
               •••
             </button>
@@ -171,5 +172,13 @@
     (closed)="closeProjectModal()"
     (projectCreated)="createProject($event)"
     (projectUpdated)="updateProject($event)"
+  />
+}
+
+@if (projectToDelete(); as project) {
+  <app-project-delete-modal
+    [project]="project"
+    (closed)="closeDeleteModal()"
+    (confirmed)="deleteProject()"
   />
 }

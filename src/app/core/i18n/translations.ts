@@ -125,6 +125,16 @@ interface TranslationDictionary {
       save: string;
       close: string;
     };
+
+    delete: {
+      eyebrow: string;
+      title: string;
+      message: string;
+      warning: string;
+      cancel: string;
+      confirm: string;
+      open: string;
+    };
   };
 }
 
@@ -255,6 +265,16 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         save: 'Save changes',
         close: 'Close form',
       },
+
+      delete: {
+        eyebrow: 'Delete project',
+        title: 'Are you sure?',
+        message: 'You are about to delete',
+        warning: 'This action cannot be undone.',
+        cancel: 'Cancel',
+        confirm: 'Delete project',
+        open: 'Delete project',
+      },
     },
   },
 
@@ -383,6 +403,16 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         create: 'Crea progetto',
         save: 'Salva modifiche',
         close: 'Chiudi il modulo',
+      },
+
+      delete: {
+        eyebrow: 'Elimina progetto',
+        title: 'Sei sicuro?',
+        message: 'Stai per eliminare',
+        warning: 'Questa azione non può essere annullata.',
+        cancel: 'Annulla',
+        confirm: 'Elimina progetto',
+        open: 'Elimina progetto',
       },
     },
   },

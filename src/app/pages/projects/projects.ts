@@ -11,17 +11,20 @@ import {
 } from '../../models/project.model';
 
 import { ProjectFormModal } from '../../shared/components/project-form-modal/project-form-modal';
+import { ProjectDeleteModal } from '../../shared/components/project-delete-modal/project-delete-modal';
 
 type ProjectFilter = 'all' | ProjectStatus;
 
 @Component({
   selector: 'app-projects',
-  imports: [ProjectFormModal],
+  imports: [ProjectFormModal, ProjectDeleteModal],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
 export class Projects {
   private readonly translation = inject(TranslationService);
+
+  readonly projectToDelete = signal<Project | null>(null);
 
   private readonly projectService = inject(ProjectService);
 
@@ -161,5 +164,25 @@ export class Projects {
       currency: 'EUR',
       maximumFractionDigits: 0,
     }).format(value);
+  }
+
+  openDeleteModal(project: Project): void {
+    this.projectToDelete.set(project);
+  }
+
+  closeDeleteModal(): void {
+    this.projectToDelete.set(null);
+  }
+
+  deleteProject(): void {
+    const project = this.projectToDelete();
+
+    if (!project) {
+      return;
+    }
+
+    this.projectService.deleteProject(project.id);
+
+    this.closeDeleteModal();
   }
 }
