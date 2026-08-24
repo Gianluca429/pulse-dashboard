@@ -92,6 +92,33 @@ interface TranslationDictionary {
       novaCrm: string;
       formaJournal: string;
     };
+
+    form: {
+      eyebrow: string;
+      title: string;
+      intro: string;
+
+      projectName: string;
+      projectNamePlaceholder: string;
+
+      client: string;
+      clientPlaceholder: string;
+
+      description: string;
+      descriptionPlaceholder: string;
+
+      status: string;
+      dueDate: string;
+      budget: string;
+
+      requiredField: string;
+      descriptionError: string;
+      budgetError: string;
+
+      cancel: string;
+      create: string;
+      close: string;
+    };
   };
 }
 
@@ -188,6 +215,34 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         novaCrm: 'Lightweight CRM interface for client and lead management.',
         formaJournal: 'Editorial area for architecture news and selected projects.',
       },
+
+      form: {
+        eyebrow: 'New project',
+        title: 'Create a project',
+        intro:
+          'Add the essential project details. You can update progress and other information later.',
+
+        projectName: 'Project name',
+        projectNamePlaceholder: 'e.g. Atlas Website',
+
+        client: 'Client',
+        clientPlaceholder: 'e.g. Atlas Studio',
+
+        description: 'Description',
+        descriptionPlaceholder: 'Briefly describe the project and its main objectives...',
+
+        status: 'Status',
+        dueDate: 'Due date',
+        budget: 'Budget',
+
+        requiredField: 'This field is required.',
+        descriptionError: 'Enter a description of at least 10 characters.',
+        budgetError: 'Enter a valid budget.',
+
+        cancel: 'Cancel',
+        create: 'Create project',
+        close: 'Close form',
+      },
     },
   },
 
@@ -282,6 +337,34 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         arcoIdentity: 'Implementazione digitale della nuova identità del brand.',
         novaCrm: 'Interfaccia CRM leggera per la gestione di clienti e lead.',
         formaJournal: 'Area editoriale dedicata a news di architettura e progetti selezionati.',
+      },
+
+      form: {
+        eyebrow: 'Nuovo progetto',
+        title: 'Crea un progetto',
+        intro:
+          'Inserisci le informazioni essenziali del progetto. Potrai aggiornare avanzamento e altri dettagli in seguito.',
+
+        projectName: 'Nome progetto',
+        projectNamePlaceholder: 'es. Sito Atlas',
+
+        client: 'Cliente',
+        clientPlaceholder: 'es. Atlas Studio',
+
+        description: 'Descrizione',
+        descriptionPlaceholder: 'Descrivi brevemente il progetto e i suoi obiettivi principali...',
+
+        status: 'Stato',
+        dueDate: 'Scadenza',
+        budget: 'Budget',
+
+        requiredField: 'Questo campo è obbligatorio.',
+        descriptionError: 'Inserisci una descrizione di almeno 10 caratteri.',
+        budgetError: 'Inserisci un budget valido.',
+
+        cancel: 'Annulla',
+        create: 'Crea progetto',
+        close: 'Chiudi il modulo',
       },
     },
   },

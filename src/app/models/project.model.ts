@@ -7,9 +7,21 @@ export interface Project {
   id: number;
   name: string;
   client: string;
-  descriptionKey: ProjectDescriptionKey;
+
+  description?: string;
+  descriptionKey?: ProjectDescriptionKey;
+
   status: ProjectStatus;
   progress: number;
+  dueDate: string;
+  budget: number;
+}
+
+export interface CreateProjectInput {
+  name: string;
+  client: string;
+  description: string;
+  status: ProjectStatus;
   dueDate: string;
   budget: number;
 }

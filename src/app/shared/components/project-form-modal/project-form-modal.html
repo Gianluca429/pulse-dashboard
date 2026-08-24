@@ -1,0 +1,162 @@
+<div class="project-modal" role="presentation" (click)="onBackdropClick($event)">
+  <section
+    class="project-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'new-project-title'"
+  >
+    <header class="project-modal__header">
+      <div>
+        <p class="project-modal__eyebrow">
+          {{ t().projects.form.eyebrow }}
+        </p>
+
+        <h2 id="new-project-title">
+          {{ t().projects.form.title }}
+        </h2>
+
+        <p>
+          {{ t().projects.form.intro }}
+        </p>
+      </div>
+
+      <button
+        class="project-modal__close"
+        type="button"
+        [attr.aria-label]="t().projects.form.close"
+        (click)="close()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18"></path>
+        </svg>
+      </button>
+    </header>
+
+    <form class="project-modal__form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="project-modal__grid">
+        <label class="field">
+          <span class="field__label">
+            {{ t().projects.form.projectName }}
+          </span>
+
+          <input
+            type="text"
+            formControlName="name"
+            [placeholder]="t().projects.form.projectNamePlaceholder"
+          />
+
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <small class="field__error">
+              {{ t().projects.form.requiredField }}
+            </small>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field__label">
+            {{ t().projects.form.client }}
+          </span>
+
+          <input
+            type="text"
+            formControlName="client"
+            [placeholder]="t().projects.form.clientPlaceholder"
+          />
+
+          @if (form.controls.client.touched && form.controls.client.invalid) {
+            <small class="field__error">
+              {{ t().projects.form.requiredField }}
+            </small>
+          }
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">
+          {{ t().projects.form.description }}
+        </span>
+
+        <textarea
+          rows="4"
+          formControlName="description"
+          [placeholder]="t().projects.form.descriptionPlaceholder"
+        ></textarea>
+
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <small class="field__error">
+            {{ t().projects.form.descriptionError }}
+          </small>
+        }
+      </label>
+
+      <div class="project-modal__grid">
+        <label class="field">
+          <span class="field__label">
+            {{ t().projects.form.status }}
+          </span>
+
+          <select formControlName="status">
+            <option value="planning">
+              {{ t().projects.planning }}
+            </option>
+
+            <option value="in-progress">
+              {{ t().projects.inProgress }}
+            </option>
+
+            <option value="review">
+              {{ t().projects.review }}
+            </option>
+
+            <option value="completed">
+              {{ t().projects.completed }}
+            </option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field__label">
+            {{ t().projects.form.dueDate }}
+          </span>
+
+          <input type="date" formControlName="dueDate" />
+
+          @if (form.controls.dueDate.touched && form.controls.dueDate.invalid) {
+            <small class="field__error">
+              {{ t().projects.form.requiredField }}
+            </small>
+          }
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">
+          {{ t().projects.form.budget }}
+        </span>
+
+        <div class="field__currency">
+          <span>€</span>
+
+          <input type="number" min="0" step="100" formControlName="budget" placeholder="0" />
+        </div>
+
+        @if (form.controls.budget.touched && form.controls.budget.invalid) {
+          <small class="field__error">
+            {{ t().projects.form.budgetError }}
+          </small>
+        }
+      </label>
+
+      <footer class="project-modal__footer">
+        <button class="project-modal__cancel" type="button" (click)="close()">
+          {{ t().projects.form.cancel }}
+        </button>
+
+        <button class="project-modal__submit" type="submit">
+          <span aria-hidden="true">+</span>
+          {{ t().projects.form.create }}
+        </button>
+      </footer>
+    </form>
+  </section>
+</div>

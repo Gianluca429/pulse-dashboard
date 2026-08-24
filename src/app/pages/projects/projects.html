@@ -14,10 +14,10 @@
       </p>
     </div>
 
-    <a class="projects__new" routerLink="/projects">
+    <button class="projects__new" type="button" (click)="openCreateModal()">
       <span aria-hidden="true">+</span>
       {{ t().common.newProject }}
-    </a>
+    </button>
   </div>
 
   <div class="projects__toolbar">
@@ -54,7 +54,10 @@
 
   <div class="projects__summary">
     <p>
-      <strong>{{ projectCount() }}</strong>
+      <strong>
+        {{ projectCount() }}
+      </strong>
+
       {{ t().projects.results }}
     </p>
   </div>
@@ -85,7 +88,7 @@
           </header>
 
           <p class="project-card__description">
-            {{ getDescription(project.descriptionKey) }}
+            {{ getDescription(project) }}
           </p>
 
           <div class="project-card__progress">
@@ -161,3 +164,7 @@
     </div>
   }
 </section>
+
+@if (isCreateModalOpen()) {
+  <app-project-form-modal (closed)="closeCreateModal()" (projectCreated)="createProject($event)" />
+}

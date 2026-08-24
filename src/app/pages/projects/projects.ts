@@ -1,15 +1,22 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { TranslationService } from '../../core/i18n/translation.service';
 import { PROJECTS } from '../../data/projects.data';
-import { Project, ProjectStatus } from '../../models/project.model';
+
+import {
+  CreateProjectInput,
+  Project,
+  ProjectDescriptionKey,
+  ProjectStatus,
+} from '../../models/project.model';
+
+import { ProjectFormModal } from '../../shared/components/project-form-modal/project-form-modal';
 
 type ProjectFilter = 'all' | ProjectStatus;
 
 @Component({
   selector: 'app-projects',
-  imports: [RouterLink],
+  imports: [ProjectFormModal],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
@@ -22,6 +29,8 @@ export class Projects {
 
   readonly searchTerm = signal('');
   readonly activeFilter = signal<ProjectFilter>('all');
+
+  readonly isCreateModalOpen = signal(false);
 
   readonly filters: ProjectFilter[] = ['all', 'planning', 'in-progress', 'review', 'completed'];
 
@@ -43,6 +52,43 @@ export class Projects {
   });
 
   readonly projectCount = computed(() => this.filteredProjects().length);
+
+  openCreateModal(): void {
+    this.isCreateModalOpen.set(true);
+  }
+
+  closeCreateModal(): void {
+    this.isCreateModalOpen.set(false);
+  }
+
+  createProject(input: CreateProjectInput): void {
+    const nextId = Math.max(0, ...this.projects().map((project) => project.id)) + 1;
+
+    const newProject: Project = {
+      id: nextId,
+      name: input.name,
+      client: input.client,
+      description: input.description,
+      status: input.status,
+      progress:
+        input.status === 'completed'
+          ? 100
+          : input.status === 'review'
+            ? 80
+            : input.status === 'in-progress'
+              ? 35
+              : 0,
+      dueDate: input.dueDate,
+      budget: input.budget,
+    };
+
+    this.projects.update((projects) => [newProject, ...projects]);
+
+    this.activeFilter.set('all');
+    this.searchTerm.set('');
+
+    this.closeCreateModal();
+  }
 
   setSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -75,7 +121,19 @@ export class Projects {
     return this.getStatusLabel(filter);
   }
 
-  getDescription(key: Project['descriptionKey']): string {
+  getDescription(project: Project): string {
+    if (project.description) {
+      return project.description;
+    }
+
+    if (project.descriptionKey) {
+      return this.getTranslatedDescription(project.descriptionKey);
+    }
+
+    return '';
+  }
+
+  private getTranslatedDescription(key: ProjectDescriptionKey): string {
     return this.t().projects.descriptions[key];
   }
 
