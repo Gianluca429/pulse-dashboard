@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 
 import { TranslationService } from '../../core/i18n/translation.service';
-import { PROJECTS } from '../../data/projects.data';
+import { ProjectService } from '../../core/services/project.service';
 
 import {
   CreateProjectInput,
@@ -23,11 +23,14 @@ type ProjectFilter = 'all' | ProjectStatus;
 export class Projects {
   private readonly translation = inject(TranslationService);
 
+  private readonly projectService = inject(ProjectService);
+
   readonly t = this.translation.t;
 
-  readonly projects = signal<Project[]>(PROJECTS);
+  readonly projects = this.projectService.projects;
 
   readonly searchTerm = signal('');
+
   readonly activeFilter = signal<ProjectFilter>('all');
 
   readonly isCreateModalOpen = signal(false);
@@ -62,27 +65,7 @@ export class Projects {
   }
 
   createProject(input: CreateProjectInput): void {
-    const nextId = Math.max(0, ...this.projects().map((project) => project.id)) + 1;
-
-    const newProject: Project = {
-      id: nextId,
-      name: input.name,
-      client: input.client,
-      description: input.description,
-      status: input.status,
-      progress:
-        input.status === 'completed'
-          ? 100
-          : input.status === 'review'
-            ? 80
-            : input.status === 'in-progress'
-              ? 35
-              : 0,
-      dueDate: input.dueDate,
-      budget: input.budget,
-    };
-
-    this.projects.update((projects) => [newProject, ...projects]);
+    this.projectService.createProject(input);
 
     this.activeFilter.set('all');
     this.searchTerm.set('');
