@@ -1,44 +1,107 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
 import { TranslationService } from '../../core/i18n/translation.service';
+import { ProjectService } from '../../core/services/project.service';
+import { ClientService } from '../../core/services/client.service';
 
-import { DeadlineType, ProjectStatus } from '../../models/dashboard.model';
+import { DashboardStat, DeadlineType } from '../../models/dashboard.model';
 
-import {
-  DASHBOARD_STATS,
-  RECENT_PROJECTS,
-  REVENUE_DATA,
-  UPCOMING_DEADLINES,
-} from '../../data/dashboard.data';
+import { ProjectStatus } from '../../models/project.model';
+
+import { RouterLink } from '@angular/router';
+
+import { DASHBOARD_STATS, REVENUE_DATA, UPCOMING_DEADLINES } from '../../data/dashboard.data';
 
 import { StatCard } from '../../shared/components/stat-card/stat-card';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [StatCard],
+  imports: [StatCard, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
   private readonly translation = inject(TranslationService);
 
+  private readonly projectService = inject(ProjectService);
+
+  private readonly clientService = inject(ClientService);
+
+  readonly revenueTotal = 48580;
+
+  formatCurrency(value: number): string {
+    const locale = this.translation.language() === 'it' ? 'it-IT' : 'en-US';
+
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
   readonly t = this.translation.t;
 
-  readonly stats = DASHBOARD_STATS;
+  readonly projects = this.projectService.projects;
+
+  readonly clients = this.clientService.clients;
+
   readonly revenue = REVENUE_DATA;
-  readonly projects = RECENT_PROJECTS;
+
   readonly deadlines = UPCOMING_DEADLINES;
 
   readonly today = new Date();
 
   readonly maxRevenue = Math.max(...this.revenue.map((item) => item.value));
 
+  readonly activeProjectsCount = computed(
+    () => this.projects().filter((project) => project.status !== 'completed').length,
+  );
+
+  readonly completionRate = computed(() => {
+    const projects = this.projects();
+
+    if (projects.length === 0) {
+      return 0;
+    }
+
+    const completed = projects.filter((project) => project.status === 'completed').length;
+
+    return Math.round((completed / projects.length) * 100);
+  });
+
+  readonly recentProjects = computed(() => this.projects().slice(0, 4));
+
+  readonly stats = computed<DashboardStat[]>(() => [
+    {
+      ...DASHBOARD_STATS[0],
+    },
+
+    {
+      ...DASHBOARD_STATS[1],
+      value: this.activeProjectsCount().toString(),
+    },
+
+    {
+      ...DASHBOARD_STATS[2],
+      value: this.clients().length.toString(),
+    },
+
+    {
+      ...DASHBOARD_STATS[3],
+      value: `${this.completionRate()}%`,
+    },
+  ]);
+
   getProjectStatusLabel(status: ProjectStatus): string {
-    const translations = this.t().dashboard;
+    const translations = this.t().projects;
 
     const labels: Record<ProjectStatus, string> = {
+      planning: translations.planning,
+
       'in-progress': translations.inProgress,
+
       review: translations.review,
+
       completed: translations.completed,
     };
 
@@ -50,7 +113,9 @@ export class Dashboard {
 
     const labels: Record<DeadlineType, string> = {
       meeting: translations.meeting,
+
       delivery: translations.delivery,
+
       review: translations.review,
     };
 

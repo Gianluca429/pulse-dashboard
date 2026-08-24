@@ -71,7 +71,7 @@
       />
     </label>
 
-    <div class="clients__filters">
+    <div class="clients__filters" role="group" [attr.aria-label]="t().clients.filterByStatus">
       @for (filter of filters; track filter) {
         <button
           type="button"
@@ -151,15 +151,15 @@
             </span>
           </div>
 
-          <strong class="client-table__number">
+          <strong class="client-table__number" [attr.data-label]="t().clients.projects">
             {{ client.projectsCount }}
           </strong>
 
-          <strong class="client-table__value">
+          <strong class="client-table__value" [attr.data-label]="t().clients.value">
             {{ formatCurrency(client.totalValue) }}
           </strong>
 
-          <span class="client-table__date">
+          <span class="client-table__date" [attr.data-label]="t().clients.lastContact">
             {{ formatDate(client.lastContact) }}
           </span>
 
@@ -170,7 +170,10 @@
               [attr.aria-label]="t().clients.editClient"
               (click)="openEditModal(client)"
             >
-              •••
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 20h4l11-11-4-4L4 16v4"></path>
+                <path d="m13.5 6.5 4 4"></path>
+              </svg>
             </button>
 
             <button

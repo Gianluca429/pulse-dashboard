@@ -39,7 +39,7 @@
       />
     </label>
 
-    <div class="projects__filters" [attr.aria-label]="t().projects.filterByStatus">
+    <div class="projects__filters" role="group" [attr.aria-label]="t().projects.filterByStatus">
       @for (filter of filters; track filter) {
         <button
           type="button"
@@ -139,7 +139,13 @@
               [attr.aria-label]="t().projects.delete.open"
               (click)="openDeleteModal(project)"
             >
-              •••
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+                <path d="M6 7l1 13h10l1-13"></path>
+                <path d="M9 7V4h6v3"></path>
+              </svg>
             </button>
           </footer>
         </article>

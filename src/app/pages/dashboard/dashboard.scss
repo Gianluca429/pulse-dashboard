@@ -74,6 +74,13 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
     }
+
+    &__period {
+        color: var(--color-text-muted);
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
 }
 
 .revenue {
@@ -316,6 +323,48 @@
 
         &__stats {
             grid-template-columns: 1fr;
+        }
+    }
+
+    .panel {
+        padding: 18px;
+
+        &__header {
+            gap: 16px;
+        }
+    }
+
+    .revenue {
+        min-height: auto;
+
+        &__summary {
+            margin-top: 24px;
+
+            strong {
+                font-size: 30px;
+            }
+        }
+
+        &__chart {
+            height: 190px;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        &__bar {
+            width: min(28px, 65%);
+        }
+    }
+
+    .deadlines {
+        &__item {
+            grid-template-columns: 44px minmax(0, 1fr);
+            gap: 12px;
+        }
+
+        &__type {
+            grid-column: 2;
+            justify-self: start;
         }
     }
 

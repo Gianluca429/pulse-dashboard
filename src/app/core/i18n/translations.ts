@@ -7,6 +7,10 @@ interface TranslationDictionary {
     newProject: string;
     viewAll: string;
     settings: string;
+    notifications: string;
+    languageSelector: string;
+    openMenu: string;
+    closeMenu: string;
   };
 
   navigation: {
@@ -15,6 +19,9 @@ interface TranslationDictionary {
     clients: string;
     invoices: string;
     settings: string;
+    mainNavigation: string;
+    settingsNavigation: string;
+    openProfile: string;
   };
 
   profile: {
@@ -207,6 +214,7 @@ interface TranslationDictionary {
       confirm: string;
       open: string;
     };
+    filterByStatus: string;
   };
 }
 
@@ -218,6 +226,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       newProject: 'New project',
       viewAll: 'View all',
       settings: 'Settings',
+      notifications: 'Notifications',
+      languageSelector: 'Language selector',
+      openMenu: 'Open navigation menu',
+      closeMenu: 'Close navigation menu',
     },
 
     navigation: {
@@ -226,6 +238,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       clients: 'Clients',
       invoices: 'Invoices',
       settings: 'Settings',
+      mainNavigation: 'Main navigation',
+      settingsNavigation: 'Settings',
+      openProfile: 'Open profile',
     },
 
     profile: {
@@ -419,6 +434,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         confirm: 'Delete client',
         open: 'Delete client',
       },
+      filterByStatus: 'Filter clients by status',
     },
   },
 
@@ -429,6 +445,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       newProject: 'Nuovo progetto',
       viewAll: 'Vedi tutto',
       settings: 'Impostazioni',
+      notifications: 'Notifiche',
+      languageSelector: 'Selettore lingua',
+      openMenu: 'Apri il menu di navigazione',
+      closeMenu: 'Chiudi il menu di navigazione',
     },
 
     navigation: {
@@ -437,6 +457,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       clients: 'Clienti',
       invoices: 'Fatture',
       settings: 'Impostazioni',
+      mainNavigation: 'Navigazione principale',
+      settingsNavigation: 'Impostazioni',
+      openProfile: 'Apri il profilo',
     },
 
     profile: {
@@ -630,6 +653,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         confirm: 'Elimina cliente',
         open: 'Elimina cliente',
       },
+      filterByStatus: 'Filtra i clienti per stato',
     },
   },
 };

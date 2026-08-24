@@ -388,8 +388,43 @@
     }
 
     &__more {
+        width: 32px;
+        height: 32px;
+
+        display: grid;
+        place-items: center;
+        flex: 0 0 32px;
+
+        padding: 0;
+
+        border: 0;
+        border-radius: 8px;
+
+        background: transparent;
         color: var(--color-text-muted) !important;
-        letter-spacing: 0.1em;
+
+        transition:
+            background-color var(--transition-fast),
+            color var(--transition-fast),
+            transform var(--transition-fast);
+
+        svg {
+            width: 15px;
+            height: 15px;
+
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background: rgba(194, 65, 65, 0.08);
+            color: var(--color-danger) !important;
+            transform: translateY(-1px);
+        }
     }
 }
 
@@ -430,6 +465,38 @@
 
         &__filters {
             width: 100%;
+            overflow-x: auto;
+            justify-content: flex-start;
+
+            button {
+                flex: 0 0 auto;
+                padding-inline: 12px;
+            }
+        }
+    }
+
+    .project-card {
+        &__description {
+            min-height: auto;
+            margin-top: 14px;
+        }
+
+        &__progress {
+            margin-top: 18px;
+        }
+
+        &__meta {
+            margin-top: 18px;
+            padding-top: 16px;
+        }
+
+        &__footer {
+            margin-top: 18px;
+        }
+
+        &__more {
+            width: 32px;
+            height: 32px;
         }
     }
 }

@@ -1,5 +1,7 @@
-import { Component, computed, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, HostListener, OnDestroy, computed, inject, signal } from '@angular/core';
+
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+
 import { filter, map, startWith } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -8,15 +10,20 @@ import { Language } from '../../core/i18n/translations';
 
 @Component({
   selector: 'app-topbar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './topbar.html',
   styleUrl: './topbar.scss',
 })
-export class Topbar {
+export class Topbar implements OnDestroy {
   private readonly router = inject(Router);
 
   readonly translation = inject(TranslationService);
+
   readonly t = this.translation.t;
+
+  readonly isMobileMenuOpen = signal(false);
+
+  private previousBodyOverflow = '';
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
@@ -54,5 +61,47 @@ export class Topbar {
 
   setLanguage(language: Language): void {
     this.translation.setLanguage(language);
+  }
+
+  toggleMobileMenu(): void {
+    if (this.isMobileMenuOpen()) {
+      this.closeMobileMenu();
+      return;
+    }
+
+    this.openMobileMenu();
+  }
+
+  openMobileMenu(): void {
+    this.previousBodyOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+
+    this.isMobileMenuOpen.set(true);
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen.set(false);
+
+    document.body.style.overflow = this.previousBodyOverflow;
+  }
+
+  onBackdropClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeMobileMenu();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.isMobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.isMobileMenuOpen()) {
+      document.body.style.overflow = this.previousBodyOverflow;
+    }
   }
 }

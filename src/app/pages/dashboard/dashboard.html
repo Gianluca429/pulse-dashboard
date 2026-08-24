@@ -16,7 +16,7 @@
   </div>
 
   <div class="dashboard__stats">
-    @for (stat of stats; track stat.key) {
+    @for (stat of stats(); track stat.key) {
       <app-stat-card [stat]="stat" />
     }
   </div>
@@ -34,14 +34,16 @@
           </h3>
         </div>
 
-        <button type="button">
+        <span class="panel__period">
           {{ t().dashboard.lastSixMonths }}
-          <span aria-hidden="true">⌄</span>
-        </button>
+        </span>
       </header>
 
       <div class="revenue__summary">
-        <strong>€48,580</strong>
+        <strong>
+          {{ formatCurrency(revenueTotal) }}
+        </strong>
+
         <span>+18.4%</span>
       </div>
 
@@ -52,7 +54,7 @@
               <div
                 class="revenue__bar"
                 [style.height.%]="(item.value / maxRevenue) * 100"
-                [attr.title]="formatMonth(item.month) + ': €' + item.value"
+                [attr.title]="formatMonth(item.month) + ': ' + formatCurrency(item.value)"
               ></div>
             </div>
 
@@ -75,10 +77,6 @@
             {{ t().dashboard.upcoming }}
           </h3>
         </div>
-
-        <button type="button">
-          {{ t().common.viewAll }}
-        </button>
       </header>
 
       <div class="deadlines__list">
@@ -119,7 +117,7 @@
         </h3>
       </div>
 
-      <a href="/projects"> {{ t().dashboard.viewAllProjects }} → </a>
+      <a routerLink="/projects"> {{ t().dashboard.viewAllProjects }} → </a>
     </header>
 
     <div class="projects-table__table">
@@ -130,7 +128,7 @@
         <span>{{ t().dashboard.dueDate }}</span>
       </div>
 
-      @for (project of projects; track project.name) {
+      @for (project of recentProjects(); track project.id) {
         <div class="projects-table__row">
           <div>
             <strong>

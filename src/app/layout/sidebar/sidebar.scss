@@ -176,8 +176,60 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
     .sidebar {
-        padding-inline: 12px;
+        padding: 24px 12px;
+
+        &__brand {
+            justify-content: center;
+            padding-inline: 0;
+            margin-bottom: 36px;
+        }
+
+        &__brand-text {
+            display: none;
+        }
+
+        &__nav,
+        &__secondary {
+            a {
+                justify-content: center;
+                gap: 0;
+                padding: 10px;
+
+                >span:not(.sidebar__icon) {
+                    display: none;
+                }
+            }
+        }
+
+        &__icon {
+            width: 20px;
+            height: 20px;
+            flex: 0 0 20px;
+        }
+
+        &__profile {
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: 0;
+            padding: 8px 0;
+        }
+
+        &__profile-copy,
+        &__profile-more {
+            display: none;
+        }
+
+        &__avatar {
+            width: 38px;
+            height: 38px;
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .sidebar {
+        display: none;
     }
 }

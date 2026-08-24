@@ -9,11 +9,12 @@
       </span>
     </a>
 
-    <nav class="sidebar__nav" aria-label="Navigazione principale">
+    <nav class="sidebar__nav" [attr.aria-label]="t().navigation.mainNavigation">
       <a
         routerLink="/dashboard"
         routerLinkActive="is-active"
         [routerLinkActiveOptions]="{ exact: true }"
+        [attr.title]="t().navigation.dashboard"
       >
         <span class="sidebar__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
@@ -24,7 +25,7 @@
         <span>{{ t().navigation.dashboard }}</span>
       </a>
 
-      <a routerLink="/projects" routerLinkActive="is-active">
+      <a routerLink="/projects" routerLinkActive="is-active" [attr.title]="t().navigation.projects">
         <span class="sidebar__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <path
@@ -36,7 +37,7 @@
         <span>{{ t().navigation.projects }}</span>
       </a>
 
-      <a routerLink="/clients" routerLinkActive="is-active">
+      <a routerLink="/clients" routerLinkActive="is-active" [attr.title]="t().navigation.clients">
         <span class="sidebar__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <path
@@ -48,7 +49,7 @@
         <span>{{ t().navigation.clients }}</span>
       </a>
 
-      <a routerLink="/invoices" routerLinkActive="is-active">
+      <a routerLink="/invoices" routerLinkActive="is-active" [attr.title]="t().navigation.invoices">
         <span class="sidebar__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <path d="M6 3h9l3 3v15H6zM9 10h6M9 14h6M9 18h4" />
@@ -61,8 +62,8 @@
   </div>
 
   <div class="sidebar__bottom">
-    <nav class="sidebar__secondary" aria-label="Impostazioni">
-      <a routerLink="/settings" routerLinkActive="is-active">
+    <nav class="sidebar__secondary" [attr.aria-label]="t().navigation.settingsNavigation">
+      <a routerLink="/settings" routerLinkActive="is-active" [attr.title]="t().navigation.settings">
         <span class="sidebar__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <path
@@ -75,7 +76,12 @@
       </a>
     </nav>
 
-    <button class="sidebar__profile" type="button" aria-label="Apri il profilo">
+    <button
+      class="sidebar__profile"
+      type="button"
+      [attr.aria-label]="t().navigation.openProfile"
+      [attr.title]="t().navigation.openProfile"
+    >
       <span class="sidebar__avatar">GL</span>
 
       <span class="sidebar__profile-copy">
