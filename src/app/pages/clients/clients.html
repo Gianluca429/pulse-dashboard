@@ -84,13 +84,21 @@
     </div>
   </div>
 
-  <div class="clients__summary">
+  <p class="clients__summary">
+    {{ t().clients.summaryShowing }}
+
     <strong>
-      {{ clientCount() }}
+      {{ filteredClients().length }}
     </strong>
 
-    {{ t().clients.results }}
-  </div>
+    {{ t().clients.summaryOf }}
+
+    <strong>
+      {{ clients().length }}
+    </strong>
+
+    {{ t().clients.summaryClients }}
+  </p>
 
   @if (filteredClients().length > 0) {
     <div class="client-table">

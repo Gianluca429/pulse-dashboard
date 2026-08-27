@@ -187,38 +187,19 @@
         width: 100%;
 
         display: grid;
-        grid-template-columns: 38px minmax(0, 1fr) auto;
+        grid-template-columns: 38px minmax(0, 1fr);
         align-items: center;
         gap: 10px;
 
-        padding: 10px 8px;
+        padding: 12px;
 
-        border: 0;
-        border-radius: 12px;
+        border: 1px solid var(--color-border);
+        border-radius: 14px;
 
-        background: transparent;
+        background: var(--color-bg);
         color: var(--color-text);
 
-        font: inherit;
         text-align: left;
-
-        cursor: pointer;
-
-        transition:
-            background-color var(--transition-fast),
-            transform var(--transition-fast);
-
-        &:hover,
-        &:focus-visible {
-            background: var(--color-surface-soft);
-        }
-
-        &:focus-visible {
-            outline: 0;
-
-            box-shadow:
-                0 0 0 3px var(--color-primary-soft);
-        }
     }
 
     &__avatar {
@@ -264,13 +245,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-    }
-
-    &__profile-more {
-        color: var(--color-text-muted);
-
-        font-size: 11px;
-        letter-spacing: 0.04em;
     }
 }
 
@@ -327,11 +301,10 @@
 
             gap: 0;
 
-            padding: 8px 0;
+            padding: 10px 8px;
         }
 
-        &__profile-copy,
-        &__profile-more {
+        &__profile-copy {
             display: none;
         }
 

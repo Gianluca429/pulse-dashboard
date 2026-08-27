@@ -52,15 +52,21 @@
     </div>
   </div>
 
-  <div class="projects__summary">
-    <p>
-      <strong>
-        {{ projectCount() }}
-      </strong>
+  <p class="projects__summary">
+    {{ t().projects.summaryShowing }}
 
-      {{ t().projects.results }}
-    </p>
-  </div>
+    <strong>
+      {{ filteredProjects().length }}
+    </strong>
+
+    {{ t().projects.summaryOf }}
+
+    <strong>
+      {{ projects().length }}
+    </strong>
+
+    {{ t().projects.summaryProjects }}
+  </p>
 
   @if (filteredProjects().length > 0) {
     <div class="projects__grid">

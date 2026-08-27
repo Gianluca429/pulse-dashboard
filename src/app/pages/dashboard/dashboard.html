@@ -41,25 +41,25 @@
 
       <div class="revenue__summary">
         <strong>
-          {{ formatCurrency(revenueTotal) }}
+          {{ formatCurrency(revenueTotal()) }}
         </strong>
-
-        <span>+18.4%</span>
       </div>
 
       <div class="revenue__chart">
-        @for (item of revenue; track item.month) {
+        @for (item of revenue(); track item.year + '-' + item.month) {
           <div class="revenue__column">
             <div class="revenue__bar-wrap">
               <div
                 class="revenue__bar"
-                [style.height.%]="(item.value / maxRevenue) * 100"
-                [attr.title]="formatMonth(item.month) + ': ' + formatCurrency(item.value)"
+                [style.height.%]="item.value === 0 ? 0 : (item.value / maxRevenue()) * 100"
+                [attr.title]="
+                  formatMonth(item.year, item.month) + ': ' + formatCurrency(item.value)
+                "
               ></div>
             </div>
 
             <span>
-              {{ formatMonth(item.month) }}
+              {{ formatMonth(item.year, item.month) }}
             </span>
           </div>
         }
@@ -80,24 +80,24 @@
       </header>
 
       <div class="deadlines__list">
-        @for (deadline of deadlines; track deadline.titleKey) {
+        @for (project of upcomingDeadlines(); track project.id) {
           <article class="deadlines__item">
             <div class="deadlines__date">
-              {{ formatShortDate(deadline.date) }}
+              {{ formatShortDate(project.dueDate) }}
             </div>
 
             <div class="deadlines__copy">
               <strong>
-                {{ getDeadlineTitle(deadline.titleKey) }}
+                {{ project.name }}
               </strong>
 
               <span>
-                {{ deadline.project }}
+                {{ project.client }}
               </span>
             </div>
 
             <span class="deadlines__type">
-              {{ getDeadlineTypeLabel(deadline.type) }}
+              {{ getProjectStatusLabel(project.status) }}
             </span>
           </article>
         }
@@ -117,15 +117,29 @@
         </h3>
       </div>
 
-      <a routerLink="/projects"> {{ t().dashboard.viewAllProjects }} → </a>
+      <a routerLink="/projects">
+        {{ t().dashboard.viewAllProjects }}
+        →
+      </a>
     </header>
 
     <div class="projects-table__table">
       <div class="projects-table__row projects-table__row--header">
-        <span>{{ t().dashboard.project }}</span>
-        <span>{{ t().dashboard.status }}</span>
-        <span>{{ t().dashboard.progress }}</span>
-        <span>{{ t().dashboard.dueDate }}</span>
+        <span>
+          {{ t().dashboard.project }}
+        </span>
+
+        <span>
+          {{ t().dashboard.status }}
+        </span>
+
+        <span>
+          {{ t().dashboard.progress }}
+        </span>
+
+        <span>
+          {{ t().dashboard.dueDate }}
+        </span>
       </div>
 
       @for (project of recentProjects(); track project.id) {

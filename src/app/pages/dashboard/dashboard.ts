@@ -1,16 +1,16 @@
 import { Component, computed, inject } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
 
 import { TranslationService } from '../../core/i18n/translation.service';
+
 import { ProjectService } from '../../core/services/project.service';
 import { ClientService } from '../../core/services/client.service';
 import { InvoiceService } from '../../core/services/invoice.service';
 
-import { DashboardStat, DeadlineType } from '../../models/dashboard.model';
+import { DashboardStat, RevenuePoint } from '../../models/dashboard.model';
 
-import { ProjectStatus } from '../../models/project.model';
-
-import { DASHBOARD_STATS, REVENUE_DATA, UPCOMING_DEADLINES } from '../../data/dashboard.data';
+import { Project, ProjectStatus } from '../../models/project.model';
 
 import { StatCard } from '../../shared/components/stat-card/stat-card';
 
@@ -37,21 +37,7 @@ export class Dashboard {
 
   readonly invoices = this.invoiceService.invoices;
 
-  /*
-   * Il grafico resta per ora basato sui mock mensili.
-   * Il totale Revenue invece arriva dalle fatture reali pagate.
-   */
-  readonly revenue = REVENUE_DATA;
-
-  readonly deadlines = UPCOMING_DEADLINES;
-
   readonly today = new Date();
-
-  readonly maxRevenue = Math.max(...this.revenue.map((item) => item.value));
-
-  get revenueTotal(): number {
-    return this.invoiceService.totalRevenue();
-  }
 
   readonly activeProjectsCount = computed(
     () => this.projects().filter((project) => project.status !== 'completed').length,
@@ -69,26 +55,68 @@ export class Dashboard {
     return Math.round((completed / projects.length) * 100);
   });
 
-  readonly recentProjects = computed(() => this.projects().slice(0, 4));
+  readonly recentProjects = computed(() =>
+    [...this.projects()].sort((a, b) => b.id - a.id).slice(0, 4),
+  );
+
+  readonly upcomingDeadlines = computed(() => {
+    const today = this.startOfDay(new Date());
+
+    return [...this.projects()]
+      .filter(
+        (project) => project.status !== 'completed' && this.parseDate(project.dueDate) >= today,
+      )
+      .sort((a, b) => this.parseDate(a.dueDate).getTime() - this.parseDate(b.dueDate).getTime())
+      .slice(0, 3);
+  });
+
+  readonly revenueTotal = computed(() => this.invoiceService.totalRevenue());
+
+  readonly revenue = computed<RevenuePoint[]>(() => {
+    const months = this.getLastSixMonths();
+
+    const paidInvoices = this.invoices().filter((invoice) => invoice.status === 'paid');
+
+    return months.map(({ year, month }) => {
+      const value = paidInvoices
+        .filter((invoice) => {
+          const issueDate = this.parseDate(invoice.issueDate);
+
+          return issueDate.getFullYear() === year && issueDate.getMonth() + 1 === month;
+        })
+        .reduce((total, invoice) => total + invoice.amount, 0);
+
+      return {
+        year,
+        month,
+        value,
+      };
+    });
+  });
+
+  readonly maxRevenue = computed(() => {
+    const values = this.revenue().map((item) => item.value);
+
+    const maximum = Math.max(...values, 0);
+
+    return maximum > 0 ? maximum : 1;
+  });
 
   readonly stats = computed<DashboardStat[]>(() => [
     {
-      ...DASHBOARD_STATS[0],
-      value: this.formatCurrency(this.invoiceService.totalRevenue()),
+      key: 'revenue',
+      value: this.formatCurrency(this.revenueTotal()),
     },
-
     {
-      ...DASHBOARD_STATS[1],
+      key: 'activeProjects',
       value: this.activeProjectsCount().toString(),
     },
-
     {
-      ...DASHBOARD_STATS[2],
+      key: 'clients',
       value: this.clients().length.toString(),
     },
-
     {
-      ...DASHBOARD_STATS[3],
+      key: 'completionRate',
       value: `${this.completionRate()}%`,
     },
   ]);
@@ -119,24 +147,6 @@ export class Dashboard {
     return labels[status];
   }
 
-  getDeadlineTypeLabel(type: DeadlineType): string {
-    const translations = this.t().dashboard;
-
-    const labels: Record<DeadlineType, string> = {
-      meeting: translations.meeting,
-
-      delivery: translations.delivery,
-
-      review: translations.review,
-    };
-
-    return labels[type];
-  }
-
-  getDeadlineTitle(key: 'clientReview' | 'homepageDelivery' | 'kickoffMeeting'): string {
-    return this.t().dashboard[key];
-  }
-
   formatLongDate(date: Date): string {
     const locale = this.translation.language() === 'it' ? 'it-IT' : 'en-US';
 
@@ -156,12 +166,39 @@ export class Dashboard {
     }).format(this.parseDate(date));
   }
 
-  formatMonth(month: number): string {
+  formatMonth(year: number, month: number): string {
     const locale = this.translation.language() === 'it' ? 'it-IT' : 'en-US';
 
     return new Intl.DateTimeFormat(locale, {
       month: 'short',
-    }).format(new Date(2026, month - 1, 1));
+    }).format(new Date(year, month - 1, 1));
+  }
+
+  private getLastSixMonths(): {
+    year: number;
+    month: number;
+  }[] {
+    const result: {
+      year: number;
+      month: number;
+    }[] = [];
+
+    const current = new Date();
+
+    for (let index = 5; index >= 0; index--) {
+      const date = new Date(current.getFullYear(), current.getMonth() - index, 1);
+
+      result.push({
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      });
+    }
+
+    return result;
+  }
+
+  private startOfDay(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 
   private parseDate(date: string): Date {

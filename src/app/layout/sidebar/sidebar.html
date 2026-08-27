@@ -96,23 +96,15 @@
       </button>
     </nav>
 
-    <button
-      class="sidebar__profile"
-      type="button"
-      [attr.aria-label]="t().navigation.openProfile"
-      [attr.title]="t().navigation.openProfile"
-    >
+    <div class="sidebar__profile">
       <span class="sidebar__avatar"> GL </span>
 
       <span class="sidebar__profile-copy">
         <strong> Gianluca </strong>
-
         <small>
           {{ t().profile.role }}
         </small>
       </span>
-
-      <span class="sidebar__profile-more" aria-hidden="true"> ••• </span>
-    </button>
+    </div>
   </div>
 </aside>

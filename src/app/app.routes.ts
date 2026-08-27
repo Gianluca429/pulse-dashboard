@@ -4,7 +4,6 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { Projects } from './pages/projects/projects';
 import { Clients } from './pages/clients/clients';
 import { Invoices } from './pages/invoices/invoices';
-import { Settings } from './pages/settings/settings';
 
 export const routes: Routes = [
   {
@@ -37,9 +36,8 @@ export const routes: Routes = [
         title: 'Invoices | Pulse',
       },
       {
-        path: 'settings',
-        component: Settings,
-        title: 'Settings | Pulse',
+        path: '**',
+        redirectTo: 'dashboard',
       },
     ],
   },

@@ -11,6 +11,8 @@ interface TranslationDictionary {
     languageSelector: string;
     openMenu: string;
     closeMenu: string;
+    notificationsEmpty: string;
+    notificationsCount: string;
   };
   navigation: {
     dashboard: string;
@@ -138,6 +140,9 @@ interface TranslationDictionary {
       confirm: string;
       open: string;
     };
+    summaryShowing: string;
+    summaryOf: string;
+    summaryProjects: string;
   };
   clients: {
     eyebrow: string;
@@ -210,6 +215,10 @@ interface TranslationDictionary {
       open: string;
     };
     filterByStatus: string;
+
+    summaryShowing: string;
+    summaryOf: string;
+    summaryClients: string;
   };
   invoices: {
     eyebrow: string;
@@ -326,6 +335,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       languageSelector: 'Language selector',
       openMenu: 'Open navigation menu',
       closeMenu: 'Close navigation menu',
+      notificationsEmpty: 'You’re all caught up',
+      notificationsCount: 'Active notifications',
     },
     navigation: {
       dashboard: 'Dashboard',
@@ -454,6 +465,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         confirm: 'Delete project',
         open: 'Delete project',
       },
+      summaryShowing: 'Showing',
+      summaryOf: 'of',
+      summaryProjects: 'projects',
     },
     clients: {
       eyebrow: 'Workspace',
@@ -526,6 +540,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Delete client',
       },
       filterByStatus: 'Filter clients by status',
+
+      summaryShowing: 'Showing',
+      summaryOf: 'of',
+      summaryClients: 'clients',
     },
     invoices: {
       eyebrow: 'Invoices',
@@ -643,6 +661,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       languageSelector: 'Selettore lingua',
       openMenu: 'Apri il menu di navigazione',
       closeMenu: 'Chiudi il menu di navigazione',
+      notificationsEmpty: 'Non hai nuove notifiche',
+      notificationsCount: 'Notifiche attive',
     },
     navigation: {
       dashboard: 'Dashboard',
@@ -771,6 +791,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         confirm: 'Elimina progetto',
         open: 'Elimina progetto',
       },
+
+      summaryShowing: 'Mostrati',
+      summaryOf: 'di',
+      summaryProjects: 'progetti',
     },
     clients: {
       eyebrow: 'Area di lavoro',
@@ -843,6 +867,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Elimina cliente',
       },
       filterByStatus: 'Filtra i clienti per stato',
+
+      summaryShowing: 'Mostrati',
+      summaryOf: 'di',
+      summaryClients: 'clienti',
     },
     invoices: {
       eyebrow: 'Fatture',

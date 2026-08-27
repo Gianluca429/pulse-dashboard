@@ -34,24 +34,6 @@
   </div>
 
   <div class="topbar__actions">
-    <label class="topbar__search">
-      <span class="topbar__search-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="7"></circle>
-
-          <path d="m20 20-4-4"></path>
-        </svg>
-      </span>
-
-      <input
-        type="search"
-        [placeholder]="t().common.search"
-        [attr.aria-label]="t().common.search"
-      />
-
-      <kbd>⌘ K</kbd>
-    </label>
-
     <div class="topbar__language" [attr.aria-label]="t().common.languageSelector">
       <button
         type="button"
@@ -72,15 +54,86 @@
       </button>
     </div>
 
-    <button class="topbar__icon-button" type="button" [attr.aria-label]="t().common.notifications">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+    <div class="topbar__notifications">
+      <button
+        class="topbar__icon-button"
+        type="button"
+        [attr.aria-label]="t().common.notifications"
+        [attr.aria-expanded]="isNotificationsOpen()"
+        aria-controls="notifications-popover"
+        (click)="toggleNotifications()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
 
-        <path d="M10 21h4"></path>
-      </svg>
+          <path d="M10 21h4"></path>
+        </svg>
 
-      <span class="topbar__notification-dot" aria-hidden="true"></span>
-    </button>
+        @if (notificationCount() > 0) {
+          <span class="topbar__notification-dot" aria-hidden="true"></span>
+        }
+      </button>
+
+      @if (isNotificationsOpen()) {
+        <div id="notifications-popover" class="notifications-popover">
+          <div class="notifications-popover__header">
+            <div>
+              <span>
+                {{ t().common.notifications }}
+              </span>
+
+              <small>
+                {{ t().common.notificationsCount }}
+              </small>
+            </div>
+
+            <strong>
+              {{ notificationCount() }}
+            </strong>
+          </div>
+
+          @if (notifications().length > 0) {
+            <div class="notifications-popover__list">
+              @for (notification of notifications(); track notification.id) {
+                <a
+                  class="notification-item"
+                  [class.is-read]="isNotificationRead(notification.id)"
+                  [class.notification-item--danger]="notification.type === 'danger'"
+                  [class.notification-item--warning]="notification.type === 'warning'"
+                  [class.notification-item--info]="notification.type === 'info'"
+                  [routerLink]="notification.route"
+                  (click)="openNotification(notification.id)"
+                >
+                  <span class="notification-item__indicator" aria-hidden="true"></span>
+
+                  <span class="notification-item__copy">
+                    <strong>
+                      {{ notification.title }}
+                    </strong>
+
+                    <small>
+                      {{ notification.description }}
+                    </small>
+                  </span>
+                </a>
+              }
+            </div>
+          } @else {
+            <div class="notifications-popover__empty">
+              <div class="notifications-popover__empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m6 12 4 4 8-8"></path>
+                </svg>
+              </div>
+
+              <span>
+                {{ t().common.notificationsEmpty }}
+              </span>
+            </div>
+          }
+        </div>
+      }
+    </div>
   </div>
 </header>
 
