@@ -1,59 +1,196 @@
-# PulseDashboard
+# Pulse Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.5.
+Pulse Dashboard is a responsive SaaS-style dashboard built with Angular.
 
-## Development server
+The project was created as a portfolio piece to simulate a modern workspace for managing projects, clients and invoices through a clean, responsive interface.
 
-To start a local development server, run:
+The application is fully client-side and uses localStorage to persist demo data and user preferences.
 
-```bash
-ng serve
+## Features
+
+- Responsive dashboard layout
+- Project management
+- Client management
+- Invoice management
+- Create, edit and delete flows
+- Search and status filters
+- Persistent demo data with localStorage
+- Dynamic revenue calculations
+- Revenue chart based on paid invoices
+- Upcoming deadlines derived from project data
+- Notification system with persistent read state
+- Settings drawer
+- Compact interface preference
+- English and Italian interface
+- Responsive mobile navigation
+- Desktop tables transformed into mobile cards
+- Accessible modal interactions
+- Keyboard support for ESC and focus management
+- SPA routing with fallback handling
+
+## Dashboard
+
+The dashboard provides a high-level overview of the workspace.
+
+It includes:
+
+- total revenue from paid invoices
+- active projects
+- total clients
+- project completion rate
+- revenue for the last six months
+- upcoming project deadlines
+- recently created projects
+
+All dashboard metrics are derived from the application data rather than static presentation values.
+
+## Projects
+
+Projects can be:
+
+- created
+- edited
+- deleted
+- searched
+- filtered by status
+
+Supported statuses:
+
+- Planning
+- In progress
+- Review
+- Completed
+
+Project data includes:
+
+- client
+- description
+- progress
+- due date
+- budget
+- status
+
+## Clients
+
+The Clients section provides a workspace for managing customer information.
+
+Each client includes:
+
+- name
+- company
+- email
+- status
+- number of projects
+- total project value
+- last contact date
+
+The desktop table automatically becomes a card-based layout on smaller screens.
+
+## Invoices
+
+Invoices can be created, edited and deleted.
+
+Each invoice includes:
+
+- invoice number
+- client
+- issue date
+- due date
+- amount
+- status
+
+Supported statuses:
+
+- Draft
+- Sent
+- Paid
+- Overdue
+
+The invoice data is also used to calculate the revenue shown on the main dashboard.
+
+## Notifications
+
+Pulse includes an in-app notification system generated from project and invoice data.
+
+Notifications can highlight:
+
+- overdue invoices
+- invoices approaching their due date
+- upcoming project deadlines
+
+Opened notifications are marked as read and their state is persisted locally.
+
+## Settings
+
+The global settings drawer allows the user to manage workspace preferences without leaving the current page.
+
+Available preferences include:
+
+- language
+- notification preferences
+- compact interface mode
+
+Settings are persisted through localStorage.
+
+## Internationalization
+
+The interface supports:
+
+- English
+- Italian
+
+The selected language is persisted and restored when the application is reopened.
+
+The project uses a lightweight custom translation system based on Angular signals rather than an external i18n dependency.
+
+## Responsive Design
+
+Pulse was designed to work across desktop, tablet and mobile layouts.
+
+Responsive behavior includes:
+
+- full desktop sidebar
+- compact tablet sidebar
+- mobile navigation drawer
+- responsive dashboard grids
+- mobile project cards
+- mobile client cards
+- mobile invoice cards
+- responsive settings drawer
+- responsive notification popover
+
+## Tech Stack
+
+- Angular
+- TypeScript
+- SCSS
+- Angular Signals
+- Angular Reactive Forms
+- Angular Router
+- RxJS
+- localStorage
+- HTML5
+
+No backend or external database is required.
+
+## Architecture
+
+The application is organized around reusable components, domain models and dedicated services.
+
+```text
+src/app/
+├── core/
+│   ├── i18n/
+│   └── services/
+├── data/
+├── layout/
+├── models/
+├── pages/
+│   ├── dashboard/
+│   ├── projects/
+│   ├── clients/
+│   └── invoices/
+└── shared/
+    ├── components/
+    └── ui/
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
