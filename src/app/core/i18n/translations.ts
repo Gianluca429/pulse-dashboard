@@ -282,6 +282,36 @@ interface TranslationDictionary {
       invalidDateRange: string;
     };
   };
+  settings: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    close: string;
+
+    profile: string;
+    workspace: string;
+    workspaceName: string;
+
+    language: string;
+    english: string;
+    italian: string;
+
+    notifications: string;
+
+    emailNotifications: string;
+    emailNotificationsDescription: string;
+
+    projectReminders: string;
+    projectRemindersDescription: string;
+
+    invoiceReminders: string;
+    invoiceRemindersDescription: string;
+
+    appearance: string;
+
+    compactInterface: string;
+    compactInterfaceDescription: string;
+  };
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
@@ -570,6 +600,36 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         invalidDateRange: 'The due date cannot be earlier than the issue date.',
       },
     },
+    settings: {
+      eyebrow: 'Settings',
+      title: 'Workspace settings',
+      intro: 'Manage your preferences and workspace experience.',
+      close: 'Close settings',
+
+      profile: 'Profile',
+      workspace: 'Workspace',
+      workspaceName: 'Workspace name',
+
+      language: 'Language',
+      english: 'English',
+      italian: 'Italiano',
+
+      notifications: 'Notifications',
+
+      emailNotifications: 'Email notifications',
+      emailNotificationsDescription: 'Receive important workspace updates.',
+
+      projectReminders: 'Project reminders',
+      projectRemindersDescription: 'Get reminders for upcoming project deadlines.',
+
+      invoiceReminders: 'Invoice reminders',
+      invoiceRemindersDescription: 'Get notified about upcoming invoice due dates.',
+
+      appearance: 'Appearance',
+
+      compactInterface: 'Compact interface',
+      compactInterfaceDescription: 'Reduce spacing and show more content on screen.',
+    },
   },
 
   it: {
@@ -857,6 +917,37 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         invalidAmount: 'Inserisci un importo maggiore di zero.',
         invalidDateRange: 'La scadenza non può precedere la data di emissione.',
       },
+    },
+    settings: {
+      eyebrow: 'Impostazioni',
+      title: 'Impostazioni area di lavoro',
+      intro: 'Gestisci le preferenze e l’esperienza della tua area di lavoro.',
+      close: 'Chiudi impostazioni',
+
+      profile: 'Profilo',
+      workspace: 'Area di lavoro',
+      workspaceName: 'Nome area di lavoro',
+
+      language: 'Lingua',
+      english: 'English',
+      italian: 'Italiano',
+
+      notifications: 'Notifiche',
+
+      emailNotifications: 'Notifiche email',
+      emailNotificationsDescription:
+        'Ricevi gli aggiornamenti importanti della tua area di lavoro.',
+
+      projectReminders: 'Promemoria progetti',
+      projectRemindersDescription: 'Ricevi promemoria per le prossime scadenze dei progetti.',
+
+      invoiceReminders: 'Promemoria fatture',
+      invoiceRemindersDescription: 'Ricevi notifiche sulle prossime scadenze delle fatture.',
+
+      appearance: 'Aspetto',
+
+      compactInterface: 'Interfaccia compatta',
+      compactInterfaceDescription: 'Riduci gli spazi e mostra più contenuti sullo schermo.',
     },
   },
 };

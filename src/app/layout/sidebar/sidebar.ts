@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
+
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { TranslationService } from '../../core/i18n/translation.service';
@@ -11,4 +12,11 @@ import { TranslationService } from '../../core/i18n/translation.service';
 })
 export class Sidebar {
   readonly t = inject(TranslationService).t;
+
+  @Output()
+  settingsRequested = new EventEmitter<void>();
+
+  openSettings(): void {
+    this.settingsRequested.emit();
+  }
 }

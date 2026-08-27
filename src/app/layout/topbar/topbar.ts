@@ -1,8 +1,18 @@
-import { Component, HostListener, OnDestroy, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  OnDestroy,
+  Output,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { filter, map, startWith } from 'rxjs/operators';
+
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TranslationService } from '../../core/i18n/translation.service';
@@ -21,6 +31,9 @@ export class Topbar implements OnDestroy {
 
   readonly t = this.translation.t;
 
+  @Output()
+  settingsRequested = new EventEmitter<void>();
+
   readonly isMobileMenuOpen = signal(false);
 
   private previousBodyOverflow = '';
@@ -28,7 +41,9 @@ export class Topbar implements OnDestroy {
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+
       map((event) => event.urlAfterRedirects),
+
       startWith(this.router.url),
     ),
     {
@@ -38,6 +53,7 @@ export class Topbar implements OnDestroy {
 
   readonly pageTitle = computed(() => {
     const url = this.currentUrl();
+
     const navigation = this.t().navigation;
 
     if (url.startsWith('/projects')) {
@@ -50,10 +66,6 @@ export class Topbar implements OnDestroy {
 
     if (url.startsWith('/invoices')) {
       return navigation.invoices;
-    }
-
-    if (url.startsWith('/settings')) {
-      return navigation.settings;
     }
 
     return navigation.dashboard;
@@ -84,6 +96,12 @@ export class Topbar implements OnDestroy {
     this.isMobileMenuOpen.set(false);
 
     document.body.style.overflow = this.previousBodyOverflow;
+  }
+
+  openSettings(): void {
+    this.closeMobileMenu();
+
+    this.settingsRequested.emit();
   }
 
   onBackdropClick(event: MouseEvent): void {

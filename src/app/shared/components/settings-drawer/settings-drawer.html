@@ -1,0 +1,216 @@
+<div class="settings-drawer" role="presentation" (click)="onBackdropClick($event)">
+  <aside
+    class="settings-drawer__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settings-drawer-title"
+  >
+    <div class="settings-drawer__header">
+      <div>
+        <p class="settings-drawer__eyebrow">
+          {{ t().settings.eyebrow }}
+        </p>
+
+        <h2 id="settings-drawer-title">
+          {{ t().settings.title }}
+        </h2>
+
+        <p>
+          {{ t().settings.intro }}
+        </p>
+      </div>
+
+      <button
+        class="settings-drawer__close"
+        type="button"
+        [attr.aria-label]="t().settings.close"
+        (click)="close()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12"></path>
+          <path d="M18 6 6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-drawer__content">
+      <section class="settings-drawer__section">
+        <div class="settings-drawer__section-heading">
+          <span>
+            {{ t().settings.profile }}
+          </span>
+        </div>
+
+        <div class="settings-profile">
+          <div class="settings-profile__avatar" aria-hidden="true">GL</div>
+
+          <div class="settings-profile__copy">
+            <strong> Gianluca </strong>
+
+            <span>
+              {{ t().profile.role }}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-drawer__section">
+        <div class="settings-drawer__section-heading">
+          <span>
+            {{ t().settings.workspace }}
+          </span>
+        </div>
+
+        <div class="settings-drawer__field">
+          <span>
+            {{ t().settings.workspaceName }}
+          </span>
+
+          <strong> Pulse </strong>
+        </div>
+      </section>
+
+      <section class="settings-drawer__section">
+        <div class="settings-drawer__section-heading">
+          <span>
+            {{ t().settings.language }}
+          </span>
+        </div>
+
+        <div class="settings-language" role="group" [attr.aria-label]="t().settings.language">
+          <button
+            type="button"
+            [class.is-active]="translation.language() === 'en'"
+            [attr.aria-pressed]="translation.language() === 'en'"
+            (click)="setLanguage('en')"
+          >
+            {{ t().settings.english }}
+          </button>
+
+          <button
+            type="button"
+            [class.is-active]="translation.language() === 'it'"
+            [attr.aria-pressed]="translation.language() === 'it'"
+            (click)="setLanguage('it')"
+          >
+            {{ t().settings.italian }}
+          </button>
+        </div>
+      </section>
+
+      <section class="settings-drawer__section">
+        <div class="settings-drawer__section-heading">
+          <span>
+            {{ t().settings.notifications }}
+          </span>
+        </div>
+
+        <div class="settings-preferences">
+          <div class="settings-preference">
+            <div>
+              <strong>
+                {{ t().settings.emailNotifications }}
+              </strong>
+
+              <span>
+                {{ t().settings.emailNotificationsDescription }}
+              </span>
+            </div>
+
+            <button
+              class="settings-switch"
+              type="button"
+              role="switch"
+              [attr.aria-checked]="emailNotifications()"
+              [attr.aria-label]="t().settings.emailNotifications"
+              [class.is-active]="emailNotifications()"
+              (click)="toggleEmailNotifications()"
+            >
+              <span></span>
+            </button>
+          </div>
+
+          <div class="settings-preference">
+            <div>
+              <strong>
+                {{ t().settings.projectReminders }}
+              </strong>
+
+              <span>
+                {{ t().settings.projectRemindersDescription }}
+              </span>
+            </div>
+
+            <button
+              class="settings-switch"
+              type="button"
+              role="switch"
+              [attr.aria-checked]="projectReminders()"
+              [attr.aria-label]="t().settings.projectReminders"
+              [class.is-active]="projectReminders()"
+              (click)="toggleProjectReminders()"
+            >
+              <span></span>
+            </button>
+          </div>
+
+          <div class="settings-preference">
+            <div>
+              <strong>
+                {{ t().settings.invoiceReminders }}
+              </strong>
+
+              <span>
+                {{ t().settings.invoiceRemindersDescription }}
+              </span>
+            </div>
+
+            <button
+              class="settings-switch"
+              type="button"
+              role="switch"
+              [attr.aria-checked]="invoiceReminders()"
+              [attr.aria-label]="t().settings.invoiceReminders"
+              [class.is-active]="invoiceReminders()"
+              (click)="toggleInvoiceReminders()"
+            >
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-drawer__section">
+        <div class="settings-drawer__section-heading">
+          <span>
+            {{ t().settings.appearance }}
+          </span>
+        </div>
+
+        <div class="settings-preference">
+          <div>
+            <strong>
+              {{ t().settings.compactInterface }}
+            </strong>
+
+            <span>
+              {{ t().settings.compactInterfaceDescription }}
+            </span>
+          </div>
+
+          <button
+            class="settings-switch"
+            type="button"
+            role="switch"
+            [attr.aria-checked]="compactInterface()"
+            [attr.aria-label]="t().settings.compactInterface"
+            [class.is-active]="compactInterface()"
+            (click)="toggleCompactInterface()"
+          >
+            <span></span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+</div>

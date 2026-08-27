@@ -75,3 +75,72 @@ p {
     outline: 2px solid var(--color-primary);
     outline-offset: 3px;
 }
+
+html.is-compact {
+    .app-shell__content {
+        padding: 22px;
+    }
+
+    .dashboard,
+    .projects,
+    .clients,
+    .invoices {
+        gap: 18px;
+    }
+
+    .dashboard__stats,
+    .projects__grid,
+    .clients__stats,
+    .invoices__stats {
+        gap: 12px;
+    }
+
+    .panel,
+    .project-card,
+    .client-stat,
+    .invoice-stat {
+        padding: 16px;
+    }
+
+    .project-card__description {
+        margin-top: 12px;
+    }
+
+    .project-card__progress,
+    .project-card__meta,
+    .project-card__footer {
+        margin-top: 16px;
+    }
+
+    .client-table__row,
+    .invoice-table__row {
+        min-height: 70px;
+    }
+
+    .topbar {
+        min-height: 74px;
+    }
+}
+
+@media (max-width: 1180px) {
+    html.is-compact {
+        .app-shell__content {
+            padding: 22px;
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    html.is-compact {
+        .app-shell__content {
+            padding: 16px;
+        }
+
+        .dashboard,
+        .projects,
+        .clients,
+        .invoices {
+            gap: 16px;
+        }
+    }
+}

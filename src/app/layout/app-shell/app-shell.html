@@ -1,11 +1,15 @@
 <div class="app-shell">
-  <app-sidebar />
+  <app-sidebar (settingsRequested)="openSettings()" />
 
   <div class="app-shell__main">
-    <app-topbar />
+    <app-topbar (settingsRequested)="openSettings()" />
 
     <main class="app-shell__content">
       <router-outlet />
     </main>
   </div>
 </div>
+
+@if (isSettingsOpen()) {
+  <app-settings-drawer (closed)="closeSettings()" />
+}

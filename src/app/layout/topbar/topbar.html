@@ -5,7 +5,6 @@
       type="button"
       [attr.aria-label]="isMobileMenuOpen() ? t().common.closeMenu : t().common.openMenu"
       [attr.aria-expanded]="isMobileMenuOpen()"
-      [attr.aria-label]="t().navigation.mainNavigation"
       aria-controls="mobile-navigation"
       (click)="toggleMobileMenu()"
     >
@@ -87,13 +86,20 @@
 
 @if (isMobileMenuOpen()) {
   <div class="mobile-nav" (click)="onBackdropClick($event)">
-    <aside id="mobile-navigation" class="mobile-nav__drawer" aria-label="Mobile navigation">
+    <aside
+      id="mobile-navigation"
+      class="mobile-nav__drawer"
+      [attr.aria-label]="t().navigation.mainNavigation"
+    >
       <div class="mobile-nav__brand">
         <span class="mobile-nav__brand-mark"> P </span>
 
         <span class="mobile-nav__brand-copy">
-          <strong>PULSE</strong>
-          <small>Workspace</small>
+          <strong> PULSE </strong>
+
+          <small>
+            {{ t().common.workspace }}
+          </small>
         </span>
       </div>
 
@@ -151,12 +157,7 @@
       </nav>
 
       <div class="mobile-nav__bottom">
-        <a
-          class="mobile-nav__settings"
-          routerLink="/settings"
-          routerLinkActive="is-active"
-          (click)="closeMobileMenu()"
-        >
+        <button class="mobile-nav__settings" type="button" (click)="openSettings()">
           <span class="mobile-nav__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path
@@ -166,13 +167,14 @@
           </span>
 
           {{ t().navigation.settings }}
-        </a>
+        </button>
 
         <div class="mobile-nav__profile">
           <span class="mobile-nav__avatar"> GL </span>
 
           <div>
-            <strong>Gianluca</strong>
+            <strong> Gianluca </strong>
+
             <small>
               {{ t().profile.role }}
             </small>
