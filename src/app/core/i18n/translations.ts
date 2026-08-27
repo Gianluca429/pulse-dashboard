@@ -12,7 +12,6 @@ interface TranslationDictionary {
     openMenu: string;
     closeMenu: string;
   };
-
   navigation: {
     dashboard: string;
     projects: string;
@@ -23,11 +22,9 @@ interface TranslationDictionary {
     settingsNavigation: string;
     openProfile: string;
   };
-
   profile: {
     role: string;
   };
-
   dashboard: {
     overview: string;
     greeting: string;
@@ -65,7 +62,6 @@ interface TranslationDictionary {
     meeting: string;
     delivery: string;
   };
-
   projects: {
     eyebrow: string;
     title: string;
@@ -143,7 +139,6 @@ interface TranslationDictionary {
       open: string;
     };
   };
-
   clients: {
     eyebrow: string;
     title: string;
@@ -216,6 +211,77 @@ interface TranslationDictionary {
     };
     filterByStatus: string;
   };
+  invoices: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    newInvoice: string;
+
+    totalInvoices: string;
+    paid: string;
+    outstanding: string;
+    revenue: string;
+
+    searchPlaceholder: string;
+    filterByStatus: string;
+
+    editInvoice: string;
+    deleteInvoice: string;
+
+    emptyTitle: string;
+    emptyText: string;
+
+    summaryShowing: string;
+    summaryOf: string;
+    summaryInvoices: string;
+
+    delete: {
+      title: string;
+      intro: string;
+      warning: string;
+      cancel: string;
+      confirm: string;
+    };
+
+    filters: {
+      all: string;
+      draft: string;
+      sent: string;
+      paid: string;
+      overdue: string;
+    };
+
+    table: {
+      invoice: string;
+      client: string;
+      issued: string;
+      dueDate: string;
+      amount: string;
+      status: string;
+    };
+
+    form: {
+      createTitle: string;
+      createIntro: string;
+      editTitle: string;
+      editIntro: string;
+
+      client: string;
+      selectClient: string;
+      issueDate: string;
+      dueDate: string;
+      amount: string;
+      status: string;
+
+      cancel: string;
+      create: string;
+      save: string;
+
+      required: string;
+      invalidAmount: string;
+      invalidDateRange: string;
+    };
+  };
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
@@ -231,7 +297,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       openMenu: 'Open navigation menu',
       closeMenu: 'Close navigation menu',
     },
-
     navigation: {
       dashboard: 'Dashboard',
       projects: 'Projects',
@@ -242,11 +307,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       settingsNavigation: 'Settings',
       openProfile: 'Open profile',
     },
-
     profile: {
       role: 'Freelancer',
     },
-
     dashboard: {
       overview: 'Overview',
       greeting: 'Good evening, Gianluca.',
@@ -284,7 +347,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       meeting: 'Meeting',
       delivery: 'Delivery',
     },
-
     projects: {
       eyebrow: 'Workspace',
       title: 'Projects',
@@ -363,7 +425,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Delete project',
       },
     },
-
     clients: {
       eyebrow: 'Workspace',
       title: 'Clients',
@@ -436,6 +497,79 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       },
       filterByStatus: 'Filter clients by status',
     },
+    invoices: {
+      eyebrow: 'Invoices',
+      title: 'Manage your invoices',
+      intro:
+        'Track payments, monitor outstanding balances and keep your billing workflow under control.',
+      newInvoice: 'New invoice',
+
+      totalInvoices: 'Total invoices',
+      paid: 'Paid',
+      outstanding: 'Outstanding',
+      revenue: 'Revenue',
+
+      searchPlaceholder: 'Search invoices...',
+      filterByStatus: 'Filter invoices by status',
+
+      summaryShowing: 'Showing',
+      summaryOf: 'of',
+      summaryInvoices: 'invoices',
+
+      editInvoice: 'Edit invoice',
+      deleteInvoice: 'Delete invoice',
+
+      emptyTitle: 'No invoices found',
+      emptyText: 'Try changing your search or filters.',
+
+      delete: {
+        title: 'Delete invoice',
+        intro: 'Are you sure you want to delete this invoice?',
+        warning: 'This action cannot be undone and the invoice will be permanently removed.',
+        cancel: 'Cancel',
+        confirm: 'Delete invoice',
+      },
+
+      filters: {
+        all: 'All',
+        draft: 'Draft',
+        sent: 'Sent',
+        paid: 'Paid',
+        overdue: 'Overdue',
+      },
+
+      table: {
+        invoice: 'Invoice',
+        client: 'Client',
+        issued: 'Issued',
+        dueDate: 'Due date',
+        amount: 'Amount',
+        status: 'Status',
+      },
+
+      form: {
+        createTitle: 'New invoice',
+        createIntro: 'Create a new invoice and add it to your billing workflow.',
+
+        editTitle: 'Edit invoice',
+        editIntro: 'Update the invoice details and payment status.',
+
+        client: 'Client',
+        selectClient: 'Select a client',
+        issueDate: 'Issue date',
+        dueDate: 'Due date',
+        amount: 'Amount',
+        status: 'Status',
+
+        cancel: 'Cancel',
+        create: 'Create invoice',
+        save: 'Save changes',
+
+        required: 'This field is required.',
+        invalidAmount: 'Enter an amount greater than zero.',
+        invalidDateRange: 'The due date cannot be earlier than the issue date.',
+      },
+    },
   },
 
   it: {
@@ -450,7 +584,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       openMenu: 'Apri il menu di navigazione',
       closeMenu: 'Chiudi il menu di navigazione',
     },
-
     navigation: {
       dashboard: 'Dashboard',
       projects: 'Progetti',
@@ -461,11 +594,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       settingsNavigation: 'Impostazioni',
       openProfile: 'Apri il profilo',
     },
-
     profile: {
       role: 'Freelance',
     },
-
     dashboard: {
       overview: 'Panoramica',
       greeting: 'Buonasera, Gianluca.',
@@ -503,7 +634,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       meeting: 'Riunione',
       delivery: 'Consegna',
     },
-
     projects: {
       eyebrow: 'Area di lavoro',
       title: 'Progetti',
@@ -582,7 +712,6 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Elimina progetto',
       },
     },
-
     clients: {
       eyebrow: 'Area di lavoro',
       title: 'Clienti',
@@ -654,6 +783,80 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
         open: 'Elimina cliente',
       },
       filterByStatus: 'Filtra i clienti per stato',
+    },
+    invoices: {
+      eyebrow: 'Fatture',
+      title: 'Gestisci le tue fatture',
+      intro:
+        'Tieni sotto controllo pagamenti, importi da incassare e l’intero flusso di fatturazione.',
+      newInvoice: 'Nuova fattura',
+
+      totalInvoices: 'Fatture totali',
+      paid: 'Pagate',
+      outstanding: 'Da incassare',
+      revenue: 'Incassato',
+
+      searchPlaceholder: 'Cerca fatture...',
+      filterByStatus: 'Filtra le fatture per stato',
+
+      summaryShowing: 'Mostrate',
+      summaryOf: 'di',
+      summaryInvoices: 'fatture',
+
+      editInvoice: 'Modifica fattura',
+      deleteInvoice: 'Elimina fattura',
+
+      emptyTitle: 'Nessuna fattura trovata',
+      emptyText: 'Prova a modificare la ricerca o i filtri.',
+
+      delete: {
+        title: 'Elimina fattura',
+        intro: 'Sei sicuro di voler eliminare questa fattura?',
+        warning:
+          'Questa azione non può essere annullata e la fattura verrà eliminata definitivamente.',
+        cancel: 'Annulla',
+        confirm: 'Elimina fattura',
+      },
+
+      filters: {
+        all: 'Tutte',
+        draft: 'Bozza',
+        sent: 'Inviate',
+        paid: 'Pagate',
+        overdue: 'Scadute',
+      },
+
+      table: {
+        invoice: 'Fattura',
+        client: 'Cliente',
+        issued: 'Emissione',
+        dueDate: 'Scadenza',
+        amount: 'Importo',
+        status: 'Stato',
+      },
+
+      form: {
+        createTitle: 'Nuova fattura',
+        createIntro: 'Crea una nuova fattura e aggiungila al tuo flusso di fatturazione.',
+
+        editTitle: 'Modifica fattura',
+        editIntro: 'Aggiorna i dati della fattura e lo stato del pagamento.',
+
+        client: 'Cliente',
+        selectClient: 'Seleziona un cliente',
+        issueDate: 'Data di emissione',
+        dueDate: 'Data di scadenza',
+        amount: 'Importo',
+        status: 'Stato',
+
+        cancel: 'Annulla',
+        create: 'Crea fattura',
+        save: 'Salva modifiche',
+
+        required: 'Questo campo è obbligatorio.',
+        invalidAmount: 'Inserisci un importo maggiore di zero.',
+        invalidDateRange: 'La scadenza non può precedere la data di emissione.',
+      },
     },
   },
 };

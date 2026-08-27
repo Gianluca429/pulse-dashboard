@@ -1,0 +1,182 @@
+<div class="invoice-modal" role="presentation" (click)="onBackdropClick($event)">
+  <section
+    class="invoice-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="isEditMode ? 'invoice-modal-edit-title' : 'invoice-modal-create-title'"
+  >
+    <div class="invoice-modal__header">
+      <div>
+        <p class="invoice-modal__eyebrow">
+          {{ t().invoices.eyebrow }}
+        </p>
+
+        @if (isEditMode) {
+          <h2 id="invoice-modal-edit-title">
+            {{ t().invoices.form.editTitle }}
+          </h2>
+
+          <p>
+            {{ t().invoices.form.editIntro }}
+          </p>
+        } @else {
+          <h2 id="invoice-modal-create-title">
+            {{ t().invoices.form.createTitle }}
+          </h2>
+
+          <p>
+            {{ t().invoices.form.createIntro }}
+          </p>
+        }
+      </div>
+
+      <button
+        class="invoice-modal__close"
+        type="button"
+        [attr.aria-label]="t().invoices.form.cancel"
+        (click)="close()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12"></path>
+          <path d="M18 6 6 18"></path>
+        </svg>
+      </button>
+    </div>
+
+    <form class="invoice-modal__form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="invoice-modal__field invoice-modal__field--full">
+        <label for="invoice-client">
+          {{ t().invoices.form.client }}
+        </label>
+
+        <div class="invoice-modal__select">
+          <select #clientSelect id="invoice-client" formControlName="client">
+            <option value="">
+              {{ t().invoices.form.selectClient }}
+            </option>
+
+            @for (client of clients(); track client.id) {
+              <option [value]="client.company">
+                {{ client.company }}
+              </option>
+            }
+          </select>
+
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m7 10 5 5 5-5"></path>
+          </svg>
+        </div>
+
+        @if (form.controls.client.touched && form.controls.client.invalid) {
+          <span class="invoice-modal__error">
+            {{ t().invoices.form.required }}
+          </span>
+        }
+      </div>
+
+      <div class="invoice-modal__grid">
+        <div class="invoice-modal__field">
+          <label for="invoice-issue-date">
+            {{ t().invoices.form.issueDate }}
+          </label>
+
+          <input id="invoice-issue-date" type="date" formControlName="issueDate" />
+
+          @if (form.controls.issueDate.touched && form.controls.issueDate.invalid) {
+            <span class="invoice-modal__error">
+              {{ t().invoices.form.required }}
+            </span>
+          }
+        </div>
+
+        <div class="invoice-modal__field">
+          <label for="invoice-due-date">
+            {{ t().invoices.form.dueDate }}
+          </label>
+
+          <input id="invoice-due-date" type="date" formControlName="dueDate" />
+
+          @if (form.controls.dueDate.touched && form.controls.dueDate.invalid) {
+            <span class="invoice-modal__error">
+              {{ t().invoices.form.required }}
+            </span>
+          }
+        </div>
+      </div>
+
+      @if (form.touched && form.hasError('invalidDateRange')) {
+        <span class="invoice-modal__error invoice-modal__error--form">
+          {{ t().invoices.form.invalidDateRange }}
+        </span>
+      }
+
+      <div class="invoice-modal__grid">
+        <div class="invoice-modal__field">
+          <label for="invoice-amount">
+            {{ t().invoices.form.amount }}
+          </label>
+
+          <div class="invoice-modal__amount">
+            <span aria-hidden="true">€</span>
+
+            <input id="invoice-amount" type="number" min="1" step="1" formControlName="amount" />
+          </div>
+
+          @if (form.controls.amount.touched && form.controls.amount.invalid) {
+            <span class="invoice-modal__error">
+              @if (form.controls.amount.hasError('required')) {
+                {{ t().invoices.form.required }}
+              } @else {
+                {{ t().invoices.form.invalidAmount }}
+              }
+            </span>
+          }
+        </div>
+
+        <div class="invoice-modal__field">
+          <label for="invoice-status">
+            {{ t().invoices.form.status }}
+          </label>
+
+          <div class="invoice-modal__select">
+            <select id="invoice-status" formControlName="status">
+              <option value="draft">
+                {{ t().invoices.filters.draft }}
+              </option>
+
+              <option value="sent">
+                {{ t().invoices.filters.sent }}
+              </option>
+
+              <option value="paid">
+                {{ t().invoices.filters.paid }}
+              </option>
+
+              <option value="overdue">
+                {{ t().invoices.filters.overdue }}
+              </option>
+            </select>
+
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 10 5 5 5-5"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="invoice-modal__footer">
+        <button class="invoice-modal__cancel" type="button" (click)="close()">
+          {{ t().invoices.form.cancel }}
+        </button>
+
+        <button class="invoice-modal__submit" type="submit">
+          @if (isEditMode) {
+            {{ t().invoices.form.save }}
+          } @else {
+            {{ t().invoices.form.create }}
+          }
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

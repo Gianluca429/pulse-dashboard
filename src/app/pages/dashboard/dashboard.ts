@@ -1,14 +1,14 @@
 import { Component, computed, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { TranslationService } from '../../core/i18n/translation.service';
 import { ProjectService } from '../../core/services/project.service';
 import { ClientService } from '../../core/services/client.service';
+import { InvoiceService } from '../../core/services/invoice.service';
 
 import { DashboardStat, DeadlineType } from '../../models/dashboard.model';
 
 import { ProjectStatus } from '../../models/project.model';
-
-import { RouterLink } from '@angular/router';
 
 import { DASHBOARD_STATS, REVENUE_DATA, UPCOMING_DEADLINES } from '../../data/dashboard.data';
 
@@ -27,17 +27,7 @@ export class Dashboard {
 
   private readonly clientService = inject(ClientService);
 
-  readonly revenueTotal = 48580;
-
-  formatCurrency(value: number): string {
-    const locale = this.translation.language() === 'it' ? 'it-IT' : 'en-US';
-
-    return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(value);
-  }
+  private readonly invoiceService = inject(InvoiceService);
 
   readonly t = this.translation.t;
 
@@ -45,6 +35,12 @@ export class Dashboard {
 
   readonly clients = this.clientService.clients;
 
+  readonly invoices = this.invoiceService.invoices;
+
+  /*
+   * Il grafico resta per ora basato sui mock mensili.
+   * Il totale Revenue invece arriva dalle fatture reali pagate.
+   */
   readonly revenue = REVENUE_DATA;
 
   readonly deadlines = UPCOMING_DEADLINES;
@@ -52,6 +48,10 @@ export class Dashboard {
   readonly today = new Date();
 
   readonly maxRevenue = Math.max(...this.revenue.map((item) => item.value));
+
+  get revenueTotal(): number {
+    return this.invoiceService.totalRevenue();
+  }
 
   readonly activeProjectsCount = computed(
     () => this.projects().filter((project) => project.status !== 'completed').length,
@@ -74,6 +74,7 @@ export class Dashboard {
   readonly stats = computed<DashboardStat[]>(() => [
     {
       ...DASHBOARD_STATS[0],
+      value: this.formatCurrency(this.invoiceService.totalRevenue()),
     },
 
     {
@@ -91,6 +92,16 @@ export class Dashboard {
       value: `${this.completionRate()}%`,
     },
   ]);
+
+  formatCurrency(value: number): string {
+    const locale = this.translation.language() === 'it' ? 'it-IT' : 'en-US';
+
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
 
   getProjectStatusLabel(status: ProjectStatus): string {
     const translations = this.t().projects;

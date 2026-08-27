@@ -1,0 +1,58 @@
+import { Invoice } from '../models/invoice.model';
+
+export const INVOICES: Invoice[] = [
+  {
+    id: 1,
+    number: 'INV-2026-001',
+    client: 'Luma Studio',
+    issueDate: '2026-07-10',
+    dueDate: '2026-08-10',
+    amount: 3200,
+    status: 'paid',
+  },
+  {
+    id: 2,
+    number: 'INV-2026-002',
+    client: 'North Labs',
+    issueDate: '2026-07-22',
+    dueDate: '2026-08-22',
+    amount: 4850,
+    status: 'overdue',
+  },
+  {
+    id: 3,
+    number: 'INV-2026-003',
+    client: 'Mira Commerce',
+    issueDate: '2026-08-02',
+    dueDate: '2026-09-02',
+    amount: 2750,
+    status: 'sent',
+  },
+  {
+    id: 4,
+    number: 'INV-2026-004',
+    client: 'Arco Group',
+    issueDate: '2026-08-08',
+    dueDate: '2026-09-08',
+    amount: 1800,
+    status: 'draft',
+  },
+  {
+    id: 5,
+    number: 'INV-2026-005',
+    client: 'Nova Agency',
+    issueDate: '2026-08-12',
+    dueDate: '2026-09-12',
+    amount: 5600,
+    status: 'sent',
+  },
+  {
+    id: 6,
+    number: 'INV-2026-006',
+    client: 'Forma Studio',
+    issueDate: '2026-08-18',
+    dueDate: '2026-09-18',
+    amount: 2400,
+    status: 'paid',
+  },
+];

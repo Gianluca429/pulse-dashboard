@@ -1,0 +1,57 @@
+<div class="invoice-delete" role="presentation" (click)="onBackdropClick($event)">
+  <section
+    class="invoice-delete__dialog"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="invoice-delete-title"
+    aria-describedby="invoice-delete-description"
+  >
+    <div class="invoice-delete__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 7h16"></path>
+        <path d="M10 11v6"></path>
+        <path d="M14 11v6"></path>
+        <path d="M6 7l1 13h10l1-13"></path>
+        <path d="M9 7V4h6v3"></path>
+      </svg>
+    </div>
+
+    <div class="invoice-delete__copy">
+      <p class="invoice-delete__eyebrow">
+        {{ t().invoices.eyebrow }}
+      </p>
+
+      <h2 id="invoice-delete-title">
+        {{ t().invoices.delete.title }}
+      </h2>
+
+      <p id="invoice-delete-description">
+        {{ t().invoices.delete.intro }}
+      </p>
+    </div>
+
+    <div class="invoice-delete__invoice">
+      <span>
+        {{ invoice.number }}
+      </span>
+
+      <strong>
+        {{ invoice.client }}
+      </strong>
+    </div>
+
+    <p class="invoice-delete__warning">
+      {{ t().invoices.delete.warning }}
+    </p>
+
+    <div class="invoice-delete__actions">
+      <button class="invoice-delete__cancel" type="button" (click)="close()">
+        {{ t().invoices.delete.cancel }}
+      </button>
+
+      <button class="invoice-delete__confirm" type="button" (click)="confirm()">
+        {{ t().invoices.delete.confirm }}
+      </button>
+    </div>
+  </section>
+</div>

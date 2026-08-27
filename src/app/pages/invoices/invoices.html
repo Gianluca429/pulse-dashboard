@@ -1,1 +1,287 @@
-<p>invoices works!</p>
+<section class="invoices">
+  <div class="invoices__hero">
+    <div>
+      <p class="invoices__eyebrow">
+        {{ t().invoices.eyebrow }}
+      </p>
+
+      <h2>
+        {{ t().invoices.title }}
+      </h2>
+
+      <p class="invoices__intro">
+        {{ t().invoices.intro }}
+      </p>
+    </div>
+
+    <button class="invoices__new" type="button" (click)="openCreateModal()">
+      <span aria-hidden="true">+</span>
+      {{ t().invoices.newInvoice }}
+    </button>
+  </div>
+
+  <div class="invoices__stats">
+    <article class="invoice-stat">
+      <span>
+        {{ t().invoices.totalInvoices }}
+      </span>
+
+      <strong>
+        {{ totalInvoices() }}
+      </strong>
+    </article>
+
+    <article class="invoice-stat">
+      <span>
+        {{ t().invoices.paid }}
+      </span>
+
+      <strong>
+        {{ paidInvoices() }}
+      </strong>
+    </article>
+
+    <article class="invoice-stat">
+      <span>
+        {{ t().invoices.outstanding }}
+      </span>
+
+      <strong>
+        {{ formatCurrency(outstandingAmount()) }}
+      </strong>
+    </article>
+
+    <article class="invoice-stat">
+      <span>
+        {{ t().invoices.revenue }}
+      </span>
+
+      <strong>
+        {{ formatCurrency(totalRevenue()) }}
+      </strong>
+    </article>
+  </div>
+
+  <div class="invoices__toolbar">
+    <label class="invoices__search">
+      <span class="invoices__search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+      </span>
+
+      <input
+        type="search"
+        [placeholder]="t().invoices.searchPlaceholder"
+        [value]="searchQuery()"
+        (input)="setSearchQuery($any($event.target).value)"
+      />
+    </label>
+
+    <div class="invoices__filters" role="group" [attr.aria-label]="t().invoices.filterByStatus">
+      <button type="button" [class.is-active]="activeFilter() === 'all'" (click)="setFilter('all')">
+        {{ t().invoices.filters.all }}
+      </button>
+
+      <button
+        type="button"
+        [class.is-active]="activeFilter() === 'draft'"
+        (click)="setFilter('draft')"
+      >
+        {{ t().invoices.filters.draft }}
+      </button>
+
+      <button
+        type="button"
+        [class.is-active]="activeFilter() === 'sent'"
+        (click)="setFilter('sent')"
+      >
+        {{ t().invoices.filters.sent }}
+      </button>
+
+      <button
+        type="button"
+        [class.is-active]="activeFilter() === 'paid'"
+        (click)="setFilter('paid')"
+      >
+        {{ t().invoices.filters.paid }}
+      </button>
+
+      <button
+        type="button"
+        [class.is-active]="activeFilter() === 'overdue'"
+        (click)="setFilter('overdue')"
+      >
+        {{ t().invoices.filters.overdue }}
+      </button>
+    </div>
+  </div>
+
+  <p class="invoices__summary">
+    {{ t().invoices.summaryShowing }}
+
+    <strong>
+      {{ filteredInvoices().length }}
+    </strong>
+
+    {{ t().invoices.summaryOf }}
+
+    <strong>
+      {{ totalInvoices() }}
+    </strong>
+
+    {{ t().invoices.summaryInvoices }}
+  </p>
+
+  @if (filteredInvoices().length > 0) {
+    <div class="invoice-table">
+      <div class="invoice-table__row invoice-table__row--header">
+        <span>
+          {{ t().invoices.table.invoice }}
+        </span>
+
+        <span>
+          {{ t().invoices.table.client }}
+        </span>
+
+        <span>
+          {{ t().invoices.table.issued }}
+        </span>
+
+        <span>
+          {{ t().invoices.table.dueDate }}
+        </span>
+
+        <span>
+          {{ t().invoices.table.amount }}
+        </span>
+
+        <span>
+          {{ t().invoices.table.status }}
+        </span>
+
+        <span aria-hidden="true"></span>
+      </div>
+
+      @for (invoice of filteredInvoices(); track invoice.id) {
+        <article class="invoice-table__row">
+          <div class="invoice-table__number">
+            <div class="invoice-table__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3h9l3 3v15H6z"></path>
+                <path d="M14 3v4h4"></path>
+                <path d="M9 12h6"></path>
+                <path d="M9 16h6"></path>
+              </svg>
+            </div>
+
+            <div>
+              <strong>
+                {{ invoice.number }}
+              </strong>
+
+              <span> #{{ invoice.id }} </span>
+            </div>
+          </div>
+
+          <strong class="invoice-table__client" [attr.data-label]="t().invoices.table.client">
+            {{ invoice.client }}
+          </strong>
+
+          <span
+            class="invoice-table__date invoice-table__date--issued"
+            [attr.data-label]="t().invoices.table.issued"
+          >
+            {{ formatDate(invoice.issueDate) }}
+          </span>
+
+          <span
+            class="invoice-table__date invoice-table__date--due"
+            [attr.data-label]="t().invoices.table.dueDate"
+          >
+            {{ formatDate(invoice.dueDate) }}
+          </span>
+
+          <strong class="invoice-table__amount" [attr.data-label]="t().invoices.table.amount">
+            {{ formatCurrency(invoice.amount) }}
+          </strong>
+
+          <span
+            class="invoice-table__status"
+            [class.invoice-table__status--draft]="invoice.status === 'draft'"
+            [class.invoice-table__status--sent]="invoice.status === 'sent'"
+            [class.invoice-table__status--paid]="invoice.status === 'paid'"
+            [class.invoice-table__status--overdue]="invoice.status === 'overdue'"
+          >
+            <i aria-hidden="true"></i>
+
+            {{ getStatusLabel(invoice.status) }}
+          </span>
+
+          <div class="invoice-table__actions">
+            <button
+              class="invoice-table__more"
+              type="button"
+              [attr.aria-label]="t().invoices.editInvoice"
+              (click)="openEditModal(invoice)"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 20h4l11-11-4-4L4 16v4"></path>
+                <path d="m13.5 6.5 4 4"></path>
+              </svg>
+            </button>
+
+            <button
+              class="invoice-table__delete"
+              type="button"
+              [attr.aria-label]="t().invoices.deleteInvoice"
+              (click)="openDeleteModal(invoice)"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+                <path d="M6 7l1 13h10l1-13"></path>
+                <path d="M9 7V4h6v3"></path>
+              </svg>
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="invoices__empty">
+      <div class="invoices__empty-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 3h9l3 3v15H6z"></path>
+          <path d="M14 3v4h4"></path>
+        </svg>
+      </div>
+
+      <h3>
+        {{ t().invoices.emptyTitle }}
+      </h3>
+
+      <p>
+        {{ t().invoices.emptyText }}
+      </p>
+    </div>
+  }
+</section>
+
+@if (isFormModalOpen()) {
+  <app-invoice-form-modal
+    [invoice]="selectedInvoice()"
+    (closed)="closeFormModal()"
+    (saved)="saveInvoice($event)"
+  />
+}
+
+@if (invoiceToDelete(); as invoice) {
+  <app-invoice-delete-modal
+    [invoice]="invoice"
+    (closed)="closeDeleteModal()"
+    (confirmed)="confirmDeleteInvoice()"
+  />
+}
